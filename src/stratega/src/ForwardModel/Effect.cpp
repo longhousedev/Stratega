@@ -277,6 +277,10 @@ namespace SGA
 		{
 			entity.setPosition({ std::floor(targetPosition.x), std::floor(targetPosition.y) });
 		}
+		else if (fm.getGameType() == GameType::PokemonTBS)
+		{
+			entity.setPosition({ std::floor(targetPosition.x), std::floor(targetPosition.y) });
+		}
 		else if (fm.getGameType() == GameType::RTS)
 		{
 			const auto* rtsFM = dynamic_cast<const RTSForwardModel*>(&fm);

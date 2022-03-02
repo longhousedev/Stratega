@@ -2,6 +2,7 @@
 #include <Stratega/Game/GameRunner.h>
 #include <Stratega/Game/TBSGameRunner.h>
 #include <Stratega/Game/RTSGameRunner.h>
+#include <Stratega/Game/PokemonTBSGameRunner.h>
 #include <Stratega/Representation/GameState.h>
 #include <Stratega/ForwardModel/ForwardModel.h>
 #include <Stratega/Configuration/GameConfig.h>
@@ -128,6 +129,10 @@ namespace SGA
 		if (config.gameType == GameType::RTS)
 		{
 			return std::make_unique<RTSGameRunner>(config);
+		}
+		if (config.gameType == GameType::PokemonTBS)
+		{
+			return std::make_unique<PokemonTBSGameRunner>(config);
 		}
 
 		assert(false);

@@ -103,7 +103,7 @@ namespace SGA
 		}		
 		
 		//Generate EndTurnAction
-		if(gameState.getGameType() == GameType::TBS)
+		if(gameState.getGameType() == GameType::TBS || gameState.getGameType() == GameType::PokemonTBS)
 		{
 			bucket.emplace_back(Action::createEndAction(playerID));
 		}

@@ -143,6 +143,8 @@ namespace YAML
                 rhs = SGA::GameType::RTS;
             else if (value == "TBS")
                 rhs = SGA::GameType::TBS;
+            else if (value == "PokemonTBS")
+                rhs = SGA::GameType::PokemonTBS;
             else
                 return false;
 

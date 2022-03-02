@@ -14,7 +14,8 @@ namespace SGA
 	enum class GameType
 	{
 		TBS,
-		RTS
+		RTS,
+		PokemonTBS
 	};
 
 	/// <summary>

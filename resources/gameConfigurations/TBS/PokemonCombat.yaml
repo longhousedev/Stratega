@@ -1,0 +1,125 @@
+GameConfig:
+    Type: PokemonTBS
+    RoundLimit: 100
+    FogOfWar: true
+
+Agents:
+    - HumanAgent
+    - DoNothingAgent
+
+GameRenderer:
+    Resolution:
+        Width: 800
+        Height: 600
+    Default Assets:
+        FogOfWar: ../../assets/Tiles/notVisible.png
+    GridIsIsometric: true
+    TileSpriteOrigin:
+        Width: 128
+        Height: 112
+    EntitySpriteOrigin:
+        Width: 256
+        Height: 360
+    TileSpriteSize:
+        Width: 256
+        Height: 144
+    EntitySpriteSize:
+        Width: 512
+        Height: 512
+    #Optional:
+    #Font: ../../assets/arial.ttf
+    #OutlineShader: ../../assets/OutLine.frag
+
+Tiles:
+    Plain:
+        Sprite: ../../assets/Tiles/plain.png
+        Symbol: .
+        IsWalkable: true
+        DefaultTile: true
+    Water:
+        Sprite: ../../assets/Tiles/water.png
+        Symbol: W
+        IsWalkable: false
+    Mountain:
+        Sprite: ../../assets/Tiles/rock.png
+        Symbol: M
+        IsWalkable: false
+    Forest:
+        Sprite: ../../assets/Tiles/forest.png
+        Symbol: F
+        IsWalkable: true
+        
+Board:
+    GenerationType: Manual
+    Layout: |-
+        M  M  M 
+        M  a0 M        
+        M  .  M
+        M  w1 M
+        M  M  M
+Actions:
+    Attack:
+        Type: EntityAction
+        Cooldown: 1
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Neighbours
+                    Options:
+                        Shape: AllPositions
+                Conditions:
+                    - "DifferentPlayer(Source, Target)"
+                    - "InRange(Source, Target, Source.AttackRange)"
+        Effects:
+            - "Attack(Target.Health, Source.AttackDamage)"
+
+    Heal:
+        Type: EntityAction
+        Cooldown: 1
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Neighbours
+                    Options:
+                        Shape: AllPositions
+                Conditions:
+                    - "InRange(Source, Target, Source.HealRange)"
+        Effects:
+            - "ModifyResource(Target.Health, Source.HealAmount)"
+
+    
+Entities:
+    Warrior:
+        Sprite: ../../assets/Entities/unit_2.png
+        Symbol: w
+        LineOfSightRange: 6
+        Actions: [Attack, Heal]
+        Parameters:
+            Health: 200
+            AttackRange: 1
+            AttackDamage: 50
+            HealRange: 1
+            HealAmount: 10
+            MovementPoints: 2
+
+    Archer:
+        Sprite: ../../assets/Entities/unit_3.png
+        Symbol: a
+        LineOfSightRange: 10
+        Parameters:
+            Health: 100
+            AttackRange: 1
+            AttackDamage: 50
+            HealRange: 1
+            HealAmount: 10
+            MovementPoints: 2
+        Actions: [Attack, Heal]
+
+ForwardModel:
+    #LoseConditions: #If true: Player -> cant play
+    #    NoHasKing:
+    #    - "HasNoEntity(Source, King)"

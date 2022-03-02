@@ -267,7 +267,7 @@ namespace SGA
 	}
 	void GenericGameRenderer::mouseButtonReleased(const sf::Event& event)
 	{
-		if (state.getGameType() == GameType::TBS)
+		if (state.getGameType() == GameType::TBS || state.getGameType() == GameType::PokemonTBS)
 		{
 			// Mouse button is released, no longer move
 			if (event.mouseButton.button == sf::Mouse::Left)
@@ -370,7 +370,7 @@ namespace SGA
 	void GenericGameRenderer::mouseButtonPressed(const sf::Event& event)
 	{
 		// Mouse button is pressed, get the position and set moving as active
-		if (state.getGameType() == GameType::TBS)
+		if (state.getGameType() == GameType::TBS || state.getGameType() == GameType::PokemonTBS)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{

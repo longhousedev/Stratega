@@ -586,6 +586,10 @@ namespace SGA
 		{
             fm = std::make_unique<TBSForwardModel>();
 		}
+		else if(config.gameType == GameType::PokemonTBS)
+		{
+            fm = std::make_unique<TBSForwardModel>();
+		}
         else if(config.gameType == GameType::RTS)
         {
             fm = std::make_unique<RTSForwardModel>();

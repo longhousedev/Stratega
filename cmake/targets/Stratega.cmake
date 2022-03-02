@@ -52,6 +52,7 @@ set(STRATEGA_SOURCE_FILES
         Game/GameRunner.cpp
         Game/RTSGameRunner.cpp
         Game/TBSGameRunner.cpp
+        Game/PokemonTBSGameRunner.cpp
         GUI/GameRenderer.cpp
 
 
