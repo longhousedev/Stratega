@@ -1,6 +1,6 @@
 GameConfig:
     Type: PokemonTBS
-    RoundLimit: 100
+    RoundLimit: 1000
     FogOfWar: true
 
 Agents:
@@ -100,9 +100,9 @@ Entities:
         Actions: [Attack, Heal]
         Parameters:
             Health: 200
-            AttackRange: 1
+            AttackRange: 4
             AttackDamage: 50
-            HealRange: 1
+            HealRange: 2
             HealAmount: 10
             MovementPoints: 2
 
@@ -112,9 +112,9 @@ Entities:
         LineOfSightRange: 10
         Parameters:
             Health: 100
-            AttackRange: 1
+            AttackRange: 4
             AttackDamage: 50
-            HealRange: 1
+            HealRange: 2
             HealAmount: 10
             MovementPoints: 2
         Actions: [Attack, Heal]

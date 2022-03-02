@@ -405,7 +405,7 @@ namespace SGA
 				}
 			}
 
-			if (state->getGameType() == GameType::TBS)
+			if (state->getGameType() == GameType::TBS || state->getGameType() == GameType::PokemonTBS )
 			{
 				auto* selectedEntity = state->getEntityAt(Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)));
 				if (selectedEntity /*&& playerID==0 *//*&& ((fowSettings.renderFogOfWar && (pointOfViewPlayerID == fowSettings.selectedPlayerID)) || !fowSettings.renderFogOfWar)*/)
