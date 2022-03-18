@@ -79,6 +79,20 @@ namespace SGA
 		void execute(GameState& state, const ForwardModel& fm, const std::vector<ActionTarget>& targets) const override;
 	};
 
+	class ArmouredAttack: public Effect 
+	{
+        FunctionParameter resourceReference;
+        FunctionParameter amountParameter;
+        FunctionParameter armourParameter;
+
+    public:
+        ArmouredAttack(const std::string exp, const std::vector< FunctionParameter >& parameters);
+    void execute(
+        GameState& state,
+        const ForwardModel& fm,
+        const std::vector< ActionTarget >& targets) const override;
+    };
+
 	class Push : public Effect
 	{
 		FunctionParameter entityParam;

@@ -175,6 +175,34 @@ namespace SGA
 			entity.flagRemove();
 	}
 
+	ArmouredAttack::ArmouredAttack(const std::string exp, const std::vector< FunctionParameter >& parameters) : 
+		Effect(exp),
+		resourceReference(parameters.at(0)),
+		amountParameter(parameters.at(1)),
+        armourParameter(parameters.at(2))
+    {
+
+    }
+
+    void ArmouredAttack::execute(
+        GameState& state,
+        const ForwardModel& fm,
+        const std::vector< ActionTarget >& targets) const
+    {
+        auto& entity = resourceReference.getEntity(state, targets);
+        auto targetResource = resourceReference.getRawParameterValue(state, targets);
+        int parameterIndex = resourceReference.getParameter(state, targets).getIndex();
+        auto amount = amountParameter.getConstant(state, targets) - armourParameter.getConstant(state, targets);
+
+        // Remove to the parameter with buffs appliead the amount
+        targetResource -= amount;
+
+        fm.modifyEntityParameterByIndex(entity, parameterIndex, targetResource);
+
+        if(targetResource <= 0)
+            entity.flagRemove();
+    }
+
 	Push::Push(const std::string exp, const std::vector<FunctionParameter>& parameters) :
 		Effect(exp),
 		entityParam(parameters[0]), targetParam(parameters[1])

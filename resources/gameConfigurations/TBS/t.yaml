@@ -1,0 +1,189 @@
+GameConfig:
+    Type: TBS
+    ActionTimer: 10s
+    RoundLimit: 100
+
+Agents:
+    - HumanAgent
+    - OSLAAgent
+
+GameRenderer:
+    Resolution:
+        Width: 800
+        Height: 600
+    Default Assets:
+        FogOfWar: ../../assets/Tiles/notVisible.png
+    GridIsIsometric: true
+    TileSpriteOrigin:
+        Width: 128
+        Height: 112
+    EntitySpriteOrigin:
+        Width: 256
+        Height: 360
+    TileSpriteSize:
+        Width: 256
+        Height: 144
+    EntitySpriteSize:
+        Width: 512
+        Height: 512
+    #Optional:
+    #Font: ../../assets/arial.ttf
+    #OutlineShader: ../../assets/OutLine.frag
+
+Player:
+    Parameters:
+        Gold: [0,0,1000]
+        Prod: [0,5,100]
+        Score: [0,0,1000]
+
+Tiles:
+    Plain:
+        Sprite: ../../assets/Tiles/plain.png
+        Symbol: .
+        IsWalkable: true
+        DefaultTile: true
+    Water:
+        Sprite: ../../assets/Tiles/water.png
+        Symbol: W
+        IsWalkable: false
+    Mountain:
+        Sprite: ../../assets/Tiles/rock.png
+        Symbol: M
+        IsWalkable: false
+        BlocksSight: true
+    Forest:
+        Sprite: ../../assets/Tiles/forest.png
+        Symbol: F
+        IsWalkable: true
+
+Entities:
+    #Dwarves
+    Infantry:
+        Sprite: ../../assets/Entities/unit_2.png
+        Symbol: di
+        LineOfSightRange: 5
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Armor: 2
+            Speed: 1
+            Range: 1
+            WeaponStrength: 3
+            Health: 4
+    Cannon:
+        Sprite: ../../assets/Entities/unit_2.png
+        LineOfSightRange: 5
+        Symbol: dc
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Armor: 0
+            Speed: 1
+            Range: 1
+            WeaponStrength: 2
+            Health: 4
+    Engineer:
+        Sprite: ../../assets/Entities/unit_2.png
+        LineOfSightRange: 5
+        Symbol: de
+        Actions: [Move, Attack]
+        Parameters:
+            Armor: 2
+            Speed: 1
+            Range: 1
+            WeaponStrength: 2
+            Health: 4
+
+Actions:
+    Attack:
+        Type: EntityAction
+        Cooldown: 1
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Neighbours
+                    Options:
+                        Shape: AllPositions
+                Conditions:
+                    #- "DifferentPlayer(Source, Target)"
+                    - "InRange(Source, Target, Source.AttackRange)"
+        Effects:
+            - "Attack(Target.Health, Source.AttackDamage)"
+
+    ArmouredAttack:
+        Type: EntityAction
+        Cooldown: 1
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Neighbours
+                    Options:
+                        Shape: AllPositions
+                Conditions:
+                    #- "DifferentPlayer(Source, Target)"
+                    - "InRange(Source, Target, Source.AttackRange)"
+        Effects:
+            - "ArmouredAttack(Target.Health, Source.AttackDamage, Target.Armour)"
+
+    Move:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.MovementPoints, 1)"
+        Targets:
+            Target:
+                Type: Position
+                SamplingMethod: 
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 3
+                        AllowDiagonals: false
+                #    Type: Neighbours
+                #    Options:
+                #        Shape: Circle
+                #        Size: 1
+                Conditions:
+                    - "IsWalkable(Target)"
+        Effects:
+            - "Move(Source, Target)"
+            - "ModifyResource(Source.MovementPoints, -1)"
+
+EntityGroups:
+    Units: [Infantry, Cannon, Engineer]
+    Attackable: [Infantry, Cannon, Engineer]
+
+Board:
+    GenerationType: Manual
+    Layout: |-
+        M M M M M M M
+        M . . . de1 . M
+        M . dc1 . di1 . M
+        M . . . . . M
+        M . dc0 . di0 . M
+        M . . . de0 . M
+        M M M M M M M
+        
+
+ForwardModel:
+    LoseConditions: #If true: Player -> cant play
+        HasNoCity:
+        - "HasNoEntity(Source, Engineer)"
+
+GameDescription:
+    Type: CombatGame
+    Actions:
+        Move: [Move]
+        Research: [Research]
+        Gather: [Mine]
+        Spawn: [Spawn, Build]
+        Attack: [Attack]
+    Entities:
+        Base: [City]
+        Building: [City, Barracks, MilitaryAcademy, Foundry, Workshop, Storage]
+        Spawner: [City, Barracks, MilitaryAcademy]
+        Unit: [Worker, Warrior, Archer, Catapult]
+        Fighter: [Warrior, Archer, Catapult]
+        NoFighter: [Worker]
+        Melee: [Warrior]
+        Ranged: [Archer, Catapult]

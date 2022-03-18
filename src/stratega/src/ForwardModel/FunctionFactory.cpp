@@ -65,6 +65,8 @@ namespace SGA
 		factory.registerFunction<UseSlotObject>("UseSlotObject");
 		factory.registerFunction<DropObject>("DropObject");
 		
+		//George Function
+        factory.registerFunction< ArmouredAttack >("ArmouredAttack");
 		return factory;
 	}
 }
