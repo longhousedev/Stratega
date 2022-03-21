@@ -267,6 +267,20 @@ namespace  SGA
 
 		return !hasEntity;
 	}
+
+	HasNoEntities::HasNoEntities(
+           const std::string exp, const std::vector< FunctionParameter >& parameters)
+            : Condition(exp), playerParam(parameters[0]){}
+
+	bool HasNoEntities::isFullfiled(
+       const GameState& state, const std::vector< ActionTarget >& targets) const
+    {
+       const auto& targetPlayer = playerParam.getPlayer(state, targets);
+
+       auto entities = state.getPlayerEntities(targetPlayer.getID());
+
+       return entities.empty();
+    }
 	
 
 	HasNoBuff::HasNoBuff(const std::string exp, const std::vector<FunctionParameter>& parameters) :

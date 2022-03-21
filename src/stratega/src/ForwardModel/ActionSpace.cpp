@@ -36,8 +36,12 @@ namespace SGA
 				if (!generateContinuousAction)
 					continue;
 				
+				// George Edit -- If first tick allow all abilities
+                                if(gameState.getCurrentTick() < actionType.getCooldown()
+                                   && actionInfo.lastExecutedTick == 0) {
+                                }
 				// Check if this action can be executed		
-				if (gameState.getCurrentTick() - actionInfo.lastExecutedTick < actionType.getCooldown())
+				else if (gameState.getCurrentTick() - actionInfo.lastExecutedTick < actionType.getCooldown())
 					continue;
 				if (!gameState.canExecuteAction(sourceEntity, actionType))
 					continue;

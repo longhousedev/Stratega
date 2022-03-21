@@ -194,6 +194,8 @@ namespace SGA
         int parameterIndex = resourceReference.getParameter(state, targets).getIndex();
         auto amount = amountParameter.getConstant(state, targets) - armourParameter.getConstant(state, targets);
 
+		if(amount < 0) amount = 0;
+
         // Remove to the parameter with buffs appliead the amount
         targetResource -= amount;
 

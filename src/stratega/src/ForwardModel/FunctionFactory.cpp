@@ -33,6 +33,10 @@ namespace SGA
 		factory.registerFunction<HasNotInventoryFull>("HasNotInventoryFull");
 		factory.registerFunction<CanEquipObject>("CanEquipObject");
 		
+		// George Function
+        factory.registerFunction< HasNoEntities >("HasNoEntities");
+
+
 		return factory;
 	}
 

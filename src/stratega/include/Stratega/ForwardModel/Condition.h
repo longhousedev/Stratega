@@ -193,6 +193,14 @@ namespace SGA
 
 	};
 
+	class HasNoEntities: public Condition {
+        FunctionParameter playerParam;
+        public:
+        HasNoEntities(const std::string exp, const std::vector< FunctionParameter >& parameters);
+        bool isFullfiled(
+            const GameState& state, const std::vector< ActionTarget >& targets) const override;
+    };
+
 	class HasNoBuff : public Condition
 	{
 		FunctionParameter entityParam;
