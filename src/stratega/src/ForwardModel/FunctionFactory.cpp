@@ -42,6 +42,10 @@ namespace SGA
 		factory.registerFunction<IsNotOccupiedGrid>("IsNotOccupiedGrid");
 		factory.registerFunction<IsNotOccupied>("IsNotOccupied");
 		
+		// George Function
+        factory.registerFunction< HasNoEntities >("HasNoEntities");
+
+
 		return factory;
 	}
 
@@ -86,6 +90,9 @@ namespace SGA
 
 		factory.registerFunction<EnqueueAction>("EnqueueAction");
 				
+		
+		//George Function
+        factory.registerFunction< ArmouredAttack >("ArmouredAttack");
 		return factory;
 	}
 }
