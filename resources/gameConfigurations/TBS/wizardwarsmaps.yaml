@@ -1,0 +1,83 @@
+Maps:
+
+    # k
+    # i c e l
+    # s t w g
+    # d p r q
+
+    # Dwarves vs Orcs
+    Map1: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  i0 .  .  .  s1 .  .  M
+        M  k0 c0 i0 .  .  .  s1 t1 k1 M
+        M  e0 c0 l0 .  .  .  g1 t1 w1 M
+        M  .  .  i0 .  .  .  s1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+
+    # Dwarves vs Elves
+    Map2: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  i0 .  .  .  d1 .  .  M
+        M  k0 c0 i0 .  .  .  d1 p1 k1 M
+        M  e0 c0 l0 .  .  .  q1 p1 r1 M
+        M  .  .  i0 .  .  .  d1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+
+    # Orcs vs Elves
+    Map3: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  s0 .  .  .  d1 .  .  M
+        M  k0 t0 s0 .  .  .  d1 p1 k1 M
+        M  w0 t0 l0 .  .  .  q1 p1 r1 M
+        M  .  .  s0 .  .  .  d1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+    # Orcs vs Dwarves
+    Map4: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  s0 .  .  .  i1 .  .  M
+        M  k0 t0 s0 .  .  .  i1 c1 k1 M
+        M  w0 t0 g0 .  .  .  l1 c1 e1 M
+        M  .  .  s0 .  .  .  i1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+
+    # Elves vs Dwarves
+    Map5: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  d0 .  .  .  i1 .  .  M
+        M  k0 p0 d0 .  .  .  i1 c1 k1 M
+        M  r0 p0 q0 .  .  .  l1 c1 e1 M
+        M  .  .  d0 .  .  .  i1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+
+    # Elves vs Orcs
+    Map6: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  d0 .  .  .  s1 .  .  M
+        M  k0 p0 d0 .  .  .  s1 t1 k1 M
+        M  r0 p0 q0 .  .  .  g1 t1 w1 M
+        M  .  .  d0 .  .  .  s1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M

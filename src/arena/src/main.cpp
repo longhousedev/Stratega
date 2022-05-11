@@ -7,13 +7,13 @@ int main(int argc, char** argv)
 {
 	InputParser parser(argc, argv);
 	auto seed = parser.getCmdOption<unsigned int>("-seed", 0);
-	auto numberOfGames = parser.getCmdOption<unsigned int>("-gamesNumber", 1);
+	auto numberOfGames = parser.getCmdOption<unsigned int>("-gamesNumber", 5);
 	auto playerCount = parser.getCmdOption<int>("-playerCount", 2);
 	auto logPath = parser.getCmdOption<std::string>("-logPath", "./sgaLog.yaml");
 	//Currently obsolete but configPath shouldn't have a default value. So we keep it until then
-        auto configPath = parser.getCmdOption< std::string >("-configPath", "../resources/gameConfigurations/TBS/KillTheKing.yaml");
+        auto configPath = parser.getCmdOption< std::string >("-configPath", "C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/hi.yaml");
 	//Optional
-	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "");
+	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/wizardwarsmaps.yaml");
 
 	if(configPath.empty())
 	{

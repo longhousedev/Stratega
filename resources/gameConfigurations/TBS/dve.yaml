@@ -2,19 +2,8 @@ GameConfig:
     Type: TBS
     ActionTimer: 10s
     FogOfWar: false
-    RoundLimit: 30
+    RoundLimit: 100
 
-#GameRunner:
-#    AgentInitializationTime:
-#        Enabled: true
-#        BudgetTimeMs: 1000
-#        DisqualificationTimeMs: 5000
-
-#    AgentComputationTime:
-#        Enabled: true
-#        BudgetTimeMs: 100
-#        DisqualificationTimeMs: 1000
-#        MaxNumberWarnings: 5
 
 GameRunner:
     AgentInitializationTime:
@@ -28,7 +17,6 @@ GameRunner:
         MaxNumberWarnings: 5    
 
 Agents:
-  #- OSLAAgent:
   #- HumanAgent:
   - MCTSAgent:
       FmCalls: 1000
@@ -107,32 +95,16 @@ Buffs:
         AdditiveModifier:
             Health: 0
 
-# k
+
 # i c e l
 # s t w g
-# d p r q
 
 
 
 Entities:
-    
-    King:
-        Sprite: ../../assets/Entities/unit_6.png
-        Symbol: k
-        LineOfSightRange: 5
-        Actions: [Move, ArmouredAttack]
-        Parameters:
-            Actions: 2
-            Armour: 2
-            MovementSpeed: 1
-            MovementPoints: 1
-            AttackRange: 1
-            AttackDamage: 1
-            Health: 6
-    
     #Dwarves
     Infantry:
-        Sprite: ../../assets/Entities/unit_2.png
+        Sprite: ../../assets/Entities/unit_9.png
         Symbol: i
         LineOfSightRange: 5
         Actions: [Move, ArmouredAttack]
@@ -158,7 +130,7 @@ Entities:
             AttackDamage: 5
             Health: 1
     Engineer:
-        Sprite: ../../assets/Entities/unit_10.png
+        Sprite: ../../assets/Entities/unit_6.png
         LineOfSightRange: 5
         Symbol: e
         Actions: [Move, ArmouredAttack, Reinforce]
@@ -171,7 +143,7 @@ Entities:
             AttackDamage: 2
             Health: 4
     Commander:
-        Sprite: ../../assets/Entities/unit_8.png
+        Sprite: ../../assets/Entities/unit_1.png
         LineOfSightRange: 5
         Symbol: l
         Actions: [Move, ArmouredAttack, Reinforce]
@@ -186,7 +158,7 @@ Entities:
 
     #Orcs
     Slasher:
-        Sprite: ../../assets/Entities/unit_2.png
+        Sprite: ../../assets/Entities/unit_7.png
         LineOfSightRange: 5
         Symbol: s
         Actions: [Move, ArmouredAttack, WarCry]
@@ -237,72 +209,6 @@ Entities:
             AttackRange: 1
             AttackDamage: 5
             Health: 8
-    SwordDancer:
-        Sprite: ../../assets/Entities/unit_3.png
-        LineOfSightRange: 5
-        Symbol: d
-        Actions: [Move, Attack]
-        Parameters:
-            Actions: 3
-            Armour: 3
-            MovementSpeed: 3
-            MovementPoints: 3
-            AttackRange: 2
-            AttackDamage: 3
-            Health: 4
-    Panther:
-        Sprite: ../../assets/Entities/unit_2.png
-        LineOfSightRange: 5
-        Symbol: p
-        Actions: [Move, ArmouredAttack]
-        Parameters:
-            Actions: 2
-            Armour: 0
-            MovementSpeed: 5
-            MovementPoints: 5
-            AttackRange: 2
-            AttackDamage: 3
-            Health: 4
-    Druid:
-        Sprite: ../../assets/Entities/unit_10.png
-        LineOfSightRange: 5
-        Symbol: r
-        Actions: [Move, ArmouredAttack, Heal]
-        Parameters:
-            Actions: 2
-            Armour: 0
-            MovementSpeed: 2
-            MovementPoints: 2
-            AttackRange: 2
-            AttackDamage: 2
-            Health: 3
-    Prince:
-        Sprite: ../../assets/Entities/unit_8.png
-        LineOfSightRange: 5
-        Symbol: q
-        Actions: [Move, Attack, SummonWolf]
-        Parameters:
-            Actions: 3
-            Armour: 0
-            MovementSpeed: 4
-            MovementPoints: 4
-            AttackRange: 1
-            AttackDamage: 6
-            Health: 8
-    Wolf:
-        Sprite: ../../assets/Entities/unit_8.png
-        LineOfSightRange: 5
-        Symbol: q
-        Actions: [Move, ArmouredAttack]
-        Parameters:
-            Actions: 2
-            Armour: 0
-            MovementSpeed: 2
-            MovementPoints: 2
-            AttackRange: 1
-            AttackDamage: 3
-            Health: 3
-
 
 
 Actions:
@@ -445,63 +351,22 @@ Actions:
             - "ApplyBuff(Target, Curse, 4)"
             - "ModifyResource(Source.Actions, -1)"
 
-    Heal:
-        Type: EntityAction
-        Preconditions:
-            - "ResourceGreaterEqual(Source.Actions, 1)"
-        Cooldown: 3
-        Targets:
-            Target:
-                Type: Entity
-                ValidTargets: All
-                SamplingMethod:
-                    Type: Dijkstra
-                    Options:
-                        SearchSize: 3
-                        AllowDiagonals: false
-                Conditions:
-                    - "SamePlayer(Source, Target)"
-        Effects:
-            - "ModifyResource(Target.Health, 3)"
-            - "ModifyResource(Source.Actions, -1)"
-
-    SummonWolf:
-        Type: EntityAction
-        Preconditions:
-            - "ResourceGreaterEqual(Source.Actions, 1)"
-        Cooldown: 4
-        Targets:
-            Target:
-                Type: Position
-                SamplingMethod: 
-                    Type: Dijkstra
-                    Options:
-                        SearchSize: 2
-                        AllowDiagonals: false
-                Conditions:
-                    - "IsWalkable(Target)"
-        Effects:
-            - "SpawnEntity(Source, Wolf, Target)"
-            - "ModifyResource(Source.Actions, -1)"
-
 EntityGroups:
     Units: [Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord]
     Attackable: [Infantry, Cannon, Engineer]
 
-# k
 # i c e l
 # s t w g
-# d p r q
 
-Board11:
+Board6:
     GenerationType: Manual
     Layout: |-
         M M M M M M M
-        M . c1 k1 e1 . M
-        M . l1 . i1 . M
+        M . c1 . e1 . M
+        M . l1 w0 i1 . M
         M . . . . . M
-        M . q0 . p0 . M
-        M . d0 k0 r0 . M
+        M . g0 . s0 . M
+        M . t0 . w0 . M
         M M M M M M M
 
 Board1:
@@ -515,7 +380,7 @@ Board1:
         M . . . e0 . M
         M M M M M M M
 
-Board12:
+Board:
     GenerationType: Manual
     Layout: |-
         M M M M M M M M M M M M
@@ -523,7 +388,7 @@ Board12:
         M . . . . . . . . . . M
         M . . . . . . . . . . M
         M . . . i0 . . . s1 . . M
-        M . k0 c0 i0 . . . s1 t1 k1 M
+        M . . c0 i0 . . . s1 t1 . M
         M . e0 c0 l0 . . . g1 t1 w1  M
         M . . . i0 . . . s1 . . M
         M . . . . . . . . . . M
@@ -531,28 +396,32 @@ Board12:
         M . . . . . . . . . . M
         M M M M M M M M M M M M
 
-Board:
+Board5:
     GenerationType: Manual
     Layout: |-
-        M  M  M  M  M  M  M  M  M  M  M
-        M  .  .  .  .  .  .  .  .  .  M
-        M  .  .  .  .  .  .  .  .  .  M
-        M  .  .  i0 .  .  .  d1 .  .  M
-        M  k0 c0 i0 .  .  .  d1 p1 k1 M
-        M  e0 c0 l0 .  .  .  q1 p1 r1 M
-        M  .  .  i0 .  .  .  d1 .  .  M
-        M  .  .  .  .  .  .  .  .  .  M
-        M  .  .  .  .  .  .  .  .  .  M
-        M  M  M  M  M  M  M  M  M  M  M
+        M M M M M M M M M M M M
+        M . . . . . . . . . . M
+        M . . . . . . . . . . M
+        M . . . . . . . . . . M
+        M . . . i1 . . . s0 . . M
+        M . . c1 i1 . . . s0 t0 . M
+        M . e1 c1 l1 . . . g0 t0 w0  M
+        M . . . i1 . . . s0 . . M
+        M . . . . . . . . . . M
+        M . . . . . . . . . . M
+        M . . . . . . . . . . M
+        M M M M M M M M M M M M
 
 
         
 
 ForwardModel:
+    WinConditions:
+        KillThemAll:
+        - "HasNoEntities(Source)"
     LoseConditions: #If true: Player -> cant play
-        HasNoKing:
-        #- "HasNoEntities(Source)"
-        - "HasNoEntity(Source, King)"
+        HasNoCity:
+        - "HasNoEntities(Source)"
 
     Trigger:
         - OnTick:
