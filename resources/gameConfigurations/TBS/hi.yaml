@@ -16,16 +16,16 @@ GameConfig:
 #        DisqualificationTimeMs: 1000
 #        MaxNumberWarnings: 5
 
-GameRunner:
-    AgentInitializationTime:
-        Enabled: true
-        BudgetTimeMs: 1000
-        DisqualificationTimeMs: 1000
-    AgentComputationTime:
-        Enabled: true
-        BudgetTimeMs: 1000
-        DisqualificationTimeMs: 1000
-        MaxNumberWarnings: 5    
+#GameRunner:
+#    AgentInitializationTime:
+#        Enabled: true
+#        BudgetTimeMs: 100
+#        DisqualificationTimeMs: 100
+#    AgentComputationTime:
+#        Enabled: true
+#        BudgetTimeMs: 100
+#        DisqualificationTimeMs: 100
+#        MaxNumberWarnings: 5    
 
 Agents:
   #- OSLAAgent:

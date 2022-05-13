@@ -4,6 +4,7 @@
 
 #include <Stratega/Arena/Arena.h>
 #include <Stratega/Arena/utils.h>
+#include <map>
 
 Arena::Arena(const SGA::GameConfig& newConfig)
 	: config(&newConfig), runner(createGameRunner(newConfig)), gameBattleCount(0)
@@ -187,6 +188,20 @@ void Arena::onGameStateAdvanced(const SGA::GameState& state, const SGA::ForwardM
 		// ToDo getActions should accept const gameStates
 		auto actions = forwardModel.generateActions(state, state.getCurrentTBSPlayer());
 		SGA::logValue("ActionCount", actions.size());
+        auto test = state.getEntities();
+		
+		//Get Entities
+
+		auto entList = state.getEntities();
+
+        std::map< char, int > entMap;
+        for(int i = 0; i < test.size(); i++) {
+           ++entMap[entList[i].getEntityType().getSymbol()];
+		}
+
+		SGA::logValue("ActiveEntities", entMap);
+
+
 	}
 	else if (state.getGameType() == SGA::GameType::RTS)
 	{
