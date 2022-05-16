@@ -2,7 +2,7 @@ GameConfig:
     Type: TBS
     ActionTimer: 10s
     FogOfWar: false
-    RoundLimit: 30
+    RoundLimit: 50
 
 #GameRunner:
 #    AgentInitializationTime:
@@ -16,16 +16,16 @@ GameConfig:
 #        DisqualificationTimeMs: 1000
 #        MaxNumberWarnings: 5
 
-#GameRunner:
-#    AgentInitializationTime:
-#        Enabled: true
-#        BudgetTimeMs: 100
-#        DisqualificationTimeMs: 100
-#    AgentComputationTime:
-#        Enabled: true
-#        BudgetTimeMs: 100
-#        DisqualificationTimeMs: 100
-#        MaxNumberWarnings: 5    
+GameRunner:
+    AgentInitializationTime:
+        Enabled: true
+        BudgetTimeMs: 100
+        DisqualificationTimeMs: 2000
+    AgentComputationTime:
+        Enabled: true
+        BudgetTimeMs: 100
+        DisqualificationTimeMs: 2000
+        MaxNumberWarnings: 5    
 
 Agents:
   #- OSLAAgent:
@@ -209,7 +209,7 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 2
-            AttackDamage: 2
+            AttackDamage: 3
             Health: 4
     Wizard:
         Sprite: ../../assets/Entities/unit_10.png
@@ -244,7 +244,7 @@ Entities:
         Actions: [Move, Attack]
         Parameters:
             Actions: 3
-            Armour: 3
+            Armour: 1
             MovementSpeed: 3
             MovementPoints: 3
             AttackRange: 2
@@ -283,12 +283,12 @@ Entities:
         Actions: [Move, Attack, SummonWolf]
         Parameters:
             Actions: 3
-            Armour: 0
+            Armour: 2
             MovementSpeed: 4
             MovementPoints: 4
             AttackRange: 1
             AttackDamage: 6
-            Health: 8
+            Health: 7
     Wolf:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
