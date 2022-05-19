@@ -16,28 +16,28 @@ GameConfig:
 #        DisqualificationTimeMs: 1000
 #        MaxNumberWarnings: 5
 
-#GameRunner:
-#    AgentInitializationTime:
-#        Enabled: true
-#        BudgetTimeMs: 100
-#        DisqualificationTimeMs: 100
-#    AgentComputationTime:
-#        Enabled: true
-#        BudgetTimeMs: 100
-#        DisqualificationTimeMs: 100
-#        MaxNumberWarnings: 5    
+GameRunner:
+    AgentInitializationTime:
+        Enabled: true
+        BudgetTimeMs: 1000
+        DisqualificationTimeMs: 100
+    AgentComputationTime:
+        Enabled: true
+        BudgetTimeMs: 1000
+        DisqualificationTimeMs: 100
+        MaxNumberWarnings: 500
 
 Agents:
   #- OSLAAgent:
   #- HumanAgent:
   - MCTSAgent:
-      FmCalls: 1000
+      FmCalls: 10000
       Budget: TIME
-      RolloutLength: 10
+      RolloutLength: 100
   - MCTSAgent:
-      FmCalls: 1000
+      FmCalls: 10000
       Budget: TIME
-      RolloutLength: 10
+      RolloutLength: 100
 
 GameRenderer:
     Resolution:
@@ -128,7 +128,7 @@ Entities:
             MovementPoints: 1
             AttackRange: 1
             AttackDamage: 1
-            Health: 6
+            Health: 10
     
     #Dwarves
     Infantry:

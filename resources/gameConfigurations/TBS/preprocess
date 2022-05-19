@@ -1,0 +1,88 @@
+import csv
+import os
+import random
+from yaml import load, dump
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
+
+# Unit lists
+
+dwarf_list = ["e", "c", "l", "i"]
+orc_list = ["w", "t", "g", "s"]
+elf_list = ["d", "p", "r", "q"]
+
+# Randomiser
+
+player_1_units = []
+player_2_units = []
+
+# Player 2
+
+def generate_lineup(player, faction_list):
+    map = []
+    for i in range(4):
+        line = []
+        amount = random.randint(0, 3)
+        places = random.sample(range(0, 5), amount)
+        for j in range(5):
+            if j in places and player == 1:
+                line.append(faction_list[i]+str(player-1))
+            elif j in places and player == 2:
+                line.append(faction_list[-(i+1)]+str(player-1))
+            else:
+                line.append(".")
+        map.append(line)
+    return map
+
+def generate_empty_space(width, height):
+    map = []
+    for i in range(height):
+        map.append(["."] * width)
+    return(map)
+
+def generate_king_line(player):
+    map = [[]]
+    line = [".", ".", "k"+str(player-1), ".", "."]
+    map[0] = line
+    return map
+
+king1 = generate_king_line(1)
+map1 = generate_lineup(1, dwarf_list)
+empty_space = generate_empty_space(5, 3)
+map2 = generate_lineup(2, orc_list)
+king2 = generate_king_line(2)
+
+full_list = king1 + map1 + empty_space + map2 + king2
+
+#print(full_list)
+
+map_string = ""
+
+for line in full_list:
+    for c in line:
+        if c == ".":
+            map_string += ".  "
+        else:
+            map_string += c+" "
+    #map_string+="\n"
+
+print(map_string)
+
+with open("testmap.yaml", "w") as stream:
+    yaml = {"Maps": {"Map1": map_string}}
+    dump(yaml, stream)
+
+# print(generate_king_line(1))
+
+# for line in map1:
+#     print(line)
+
+# for line in empty_space:
+#     print(line)
+
+# for line in map2:
+#     print(line)
+
+# print(generate_king_line(2))
