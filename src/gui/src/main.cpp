@@ -2,17 +2,18 @@
 #include <Stratega/Game/GameRunner.h>
 #include <Stratega/Utils/filesystem.hpp>
 #undef max
+#include <Stratega/Utils/cparse/shunting-yard.h>
+#include <Stratega/Utils/cparse/builtin-features.h>
 
 int main()
 {
-	std::mt19937 rngEngine(0);
-	//std::string configPath("../resources/gameConfigurations/RTS/BasicRTS.yaml");
+	boost::mt19937 rngEngine(0);
 	std::string configPath("C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/hi.yaml");
 	auto gameConfig = SGA::loadConfigFromYAML(configPath);
-	
+
 	auto agents = gameConfig->generateAgents();
 	// Set seed of the agents for deterministic behaviour - ToDo Should we move this into Stratega & Should it be done automatically with generateAgents?
-	std::uniform_int_distribution<unsigned int> seedDist(0, std::numeric_limits<unsigned int>::max());
+	boost::random::uniform_int_distribution<unsigned int> seedDist(0, std::numeric_limits<unsigned int>::max());
 	for(auto& agent : agents)
 	{
 		auto seed = seedDist(rngEngine);

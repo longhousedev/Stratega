@@ -136,16 +136,32 @@ namespace  SGA
 		return sourceEntity.getOwnerID() == targetEntity.getOwnerID();
 	}
 
-	DifferentPlayer::DifferentPlayer(const std::string exp, const std::vector<FunctionParameter>& /*parameters*/) : Condition(exp)
+	IsPlayerID::IsPlayerID(const std::string exp, const std::vector<FunctionParameter>& parameters) : 
+		Condition(exp),
+		playerID(parameters.at(1))
+	{
+	}
+
+	bool IsPlayerID::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		auto targetPlayerID = playerID.getConstant(state, targets);
+
+		return targets[0].getPlayerID(state) == targetPlayerID;
+	}
+
+	DifferentPlayer::DifferentPlayer(const std::string exp, const std::vector<FunctionParameter>& parameters) :
+		Condition(exp),
+		targetEntity(parameters.at(1))
 	{
 	}
 
 	bool DifferentPlayer::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
 	{
 		auto& sourceEntity = targets[0].getEntityConst(state);
-		auto& targetEntity = targets[1].getEntityConst(state);
+		//auto& targetEntity = targets[1].getEntityConst(state);
+		auto& target = targetEntity.getEntity(state, targets);
 
-		return sourceEntity.getOwnerID() != targetEntity.getOwnerID();
+		return sourceEntity.getOwnerID() != target.getOwnerID();
 	}
 
 	InRange::InRange(const std::string exp, const std::vector<FunctionParameter>& parameters)
@@ -159,11 +175,29 @@ namespace  SGA
 
 	bool InRange::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
 	{
+		const auto& source = sourceEntity.getPosition(state, targets);
+		const auto& target = targetEntity.getPosition(state, targets);
+		auto dist = distance.getConstant(state, targets);
+		//std::cout << "	InRange: " << source.getPosition().distance(target) <<"<=" << dist<<std::endl;
+		return source.distance(target) <= dist;
+	}
+
+	OutRange::OutRange(const std::string exp, const std::vector<FunctionParameter>& parameters)
+		:Condition(exp),
+		sourceEntity(parameters.at(0)),
+		targetEntity(parameters.at(1)),
+		distance(parameters.at(2))
+		
+	{
+	}
+
+	bool OutRange::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
 		const auto& source = sourceEntity.getEntity(state, targets);
 		const auto& target = targetEntity.getPosition(state, targets);
 		auto dist = distance.getConstant(state, targets);
-
-		return source.getPosition().distance(target) <= dist;
+		//std::cout << "	InRange: " << source.getPosition().distance(target) <<"<=" << dist<<std::endl;
+		return source.getPosition().distance(target) >= dist;
 	}
 
 	IsWalkable::IsWalkable(const std::string exp, const std::vector<FunctionParameter>& parameters)
@@ -175,8 +209,86 @@ namespace  SGA
 	bool IsWalkable::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
 	{
 		auto pos = targetPosition.getPosition(state, targets);
-		Tile t = state.getTileAt({ static_cast<int>(pos.x), static_cast<int>(pos.y) });
-		return t.isWalkable() && state.getEntityAt(pos) == nullptr;
+		Tile t = state.getTileAtConst({ static_cast<int>(pos.x), static_cast<int>(pos.y) });
+		return t.isWalkable()/* && state.getEntityAtConst(pos) == nullptr*/;
+	}
+
+	IsOccupied::IsOccupied(const std::string exp, const std::vector<FunctionParameter>& parameters)
+		: Condition(exp), 
+		targetPosition(parameters[0])
+	{
+	}
+	
+	bool IsOccupied::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		auto pos = targetPosition.getPosition(state, targets);
+		
+		return state.getEntitiesAtConst(pos).size()!=0;
+	}
+	IsOccupiedGrid::IsOccupiedGrid(const std::string exp, const std::vector<FunctionParameter>& parameters)
+		: Condition(exp), 
+		targetPosition(parameters[0]),
+		gridLevel(parameters[1])
+	{
+	}
+	
+	bool IsOccupiedGrid::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		auto pos = targetPosition.getPosition(state, targets);
+		if (gridLevel.getType() == FunctionParameter::Type::Constant)
+		{
+			auto grid = gridLevel.getConstant(state, targets);
+
+			return state.getEntitiesAtConst(pos, static_cast<int>(grid)).size() != 0;
+		}
+		else if (gridLevel.getType() == FunctionParameter::Type::EntityTypeReference ||
+			gridLevel.getType() == FunctionParameter::Type::ArgumentReference)
+		{
+			auto type = gridLevel.getEntityType(state, targets);
+
+			return state.getEntitiesAtConst(pos, type.getID()).size() != 0;
+		}
+		else
+			return false;
+	}
+
+	IsNotOccupied::IsNotOccupied(const std::string exp, const std::vector<FunctionParameter>& parameters)
+		: Condition(exp), 
+		targetPosition(parameters[0])
+	{
+	}
+	
+	bool IsNotOccupied::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		auto pos = targetPosition.getPosition(state, targets);
+		
+		return state.getEntitiesAtConst(pos).size()==0;
+	}
+
+	IsNotOccupiedGrid::IsNotOccupiedGrid(const std::string exp, const std::vector<FunctionParameter>& parameters)
+		: Condition(exp), 
+		targetPosition(parameters[0]),
+		gridLevel(parameters[1])
+	{
+	}
+	
+	bool IsNotOccupiedGrid::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		auto pos = targetPosition.getPosition(state, targets);
+		if (gridLevel.getType() == FunctionParameter::Type::Constant)
+		{
+			auto grid = gridLevel.getConstant(state, targets);
+
+			return state.getEntitiesAtConst(pos, static_cast<int>(grid)).size() == 0;
+		}
+		else if (gridLevel.getType() == FunctionParameter::Type::EntityTypeReference ||
+			gridLevel.getType() == FunctionParameter::Type::ArgumentReference)
+		{
+			auto type = gridLevel.getEntityType(state, targets);
+
+			return state.getEntitiesAtConst(pos, type.getGrid()).size() == 0;
+		}
+		else return false;
 	}
 
 	IsTile::IsTile(const std::string exp, const std::vector<FunctionParameter>& parameters)
@@ -192,7 +304,7 @@ namespace  SGA
 		auto pos = targetPosition.getPosition(state, targets);
 		const TileType& tileType = targetTile.getTileType(state, targets);
 		//Check if target tile is same as the tile
-		Tile t = state.getTileAt({ static_cast<int>(pos.x), static_cast<int>(pos.y) });
+		Tile t = state.getTileAtConst({ static_cast<int>(pos.x), static_cast<int>(pos.y) });
 		return t.getTileTypeID()==tileType.getID();
 	}
 
@@ -228,6 +340,48 @@ namespace  SGA
 			return false;
 		}
 		
+	}
+
+	IsTick::IsTick(const std::string exp, const std::vector<FunctionParameter>& parameters) :
+		Condition(exp), 
+		tickParam(parameters[0])
+	{
+	}
+
+	bool IsTick::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		double tick = tickParam.getConstant(state, targets);
+		auto currentTick = state.getCurrentTick();
+
+		if(tick==currentTick)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+	}
+
+	IsNotTick::IsNotTick(const std::string exp, const std::vector<FunctionParameter>& parameters) :
+		Condition(exp), 
+		tickParam(parameters[0])
+	{
+	}
+
+	bool IsNotTick::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		double tick = tickParam.getConstant(state, targets);
+		auto currentTick = state.getCurrentTick();
+
+		if(tick!=currentTick)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
 	}
 	
 	IsResearched::IsResearched(const std::string exp, const std::vector<FunctionParameter>& parameters) :
@@ -268,19 +422,20 @@ namespace  SGA
 		return !hasEntity;
 	}
 
-	HasNoEntities::HasNoEntities(
-           const std::string exp, const std::vector< FunctionParameter >& parameters)
-            : Condition(exp), playerParam(parameters[0]){}
+	HasNoEntities::HasNoEntities(const std::string exp, const std::vector<FunctionParameter>& parameters) :
+		Condition(exp),
+		playerParam(parameters[0])
+	{
+	}
 
-	bool HasNoEntities::isFullfiled(
-       const GameState& state, const std::vector< ActionTarget >& targets) const
-    {
-       const auto& targetPlayer = playerParam.getPlayer(state, targets);
+	bool HasNoEntities::isFullfiled(const GameState& state, const std::vector<ActionTarget>& targets) const
+	{
+		const auto& targetPlayer = playerParam.getPlayer(state, targets);
 
-       auto entities = state.getPlayerEntities(targetPlayer.getID());
+		auto entities = state.getPlayerEntities(targetPlayer.getID());
 
-       return entities.empty();
-    }
+		return entities.size()<=0;
+	}
 	
 
 	HasNoBuff::HasNoBuff(const std::string exp, const std::vector<FunctionParameter>& parameters) :
@@ -411,7 +566,7 @@ namespace  SGA
 	{
 
 		//Get cost of target, parameterlist to look up and the parameters of the source
-		const auto& cost = costParam.getCost(state, targets);
+		const auto cost = costParam.getCost(state, targets);
 		const auto& parameterLookUp = sourceParam.getParameterLookUp(state, targets);
 		const auto& parameters = sourceParam.getParameterList(state, targets);
 
@@ -419,8 +574,16 @@ namespace  SGA
 		for (const auto& idCostPair : cost)
 		{
 			const auto& param = parameterLookUp.at(idCostPair.first);
-			if (parameters[static_cast<size_t>(param.getIndex())] < idCostPair.second)
-				return false;
+			auto it = parameters.find(param.getIndex());
+			if (it != parameters.end())
+			{
+				if (it->second < idCostPair.second)
+					return false;
+			}
+			else
+			{
+				throw std::runtime_error("Parameter not found");
+			}
 		}
 
 		return true;
