@@ -19,13 +19,13 @@ GameConfig:
 GameRunner:
     AgentInitializationTime:
         Enabled: true
-        BudgetTimeMs: 100
+        BudgetTimeMs: 50
         DisqualificationTimeMs: 2000
     AgentComputationTime:
         Enabled: true
-        BudgetTimeMs: 100
+        BudgetTimeMs: 50
         DisqualificationTimeMs: 2000
-        MaxNumberWarnings: 5    
+        MaxNumberWarnings: 5000
 
 Agents:
   #- OSLAAgent:
@@ -128,7 +128,7 @@ Entities:
             MovementPoints: 1
             AttackRange: 1
             AttackDamage: 1
-            Health: 6
+            Health: 15
     
     #Dwarves
     Infantry:
@@ -292,7 +292,7 @@ Entities:
     Wolf:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
-        Symbol: q
+        Symbol: f
         Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
@@ -515,23 +515,21 @@ Board1:
         M . . . e0 . M
         M M M M M M M
 
-Board12:
+Board:
     GenerationType: Manual
     Layout: |-
-        M M M M M M M M M M M M
-        M . . . . . . . . . . M
-        M . . . . . . . . . . M
-        M . . . . . . . . . . M
-        M . . . i0 . . . s1 . . M
-        M . k0 c0 i0 . . . s1 t1 k1 M
-        M . e0 c0 l0 . . . g1 t1 w1  M
-        M . . . i0 . . . s1 . . M
-        M . . . . . . . . . . M
-        M . . . . . . . . . . M
-        M . . . . . . . . . . M
-        M M M M M M M M M M M M
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  i0 .  .  .  d1 .  .  M
+        M  k0 c0 i0 .  .  .  d1 p1 k1 M
+        M  e0 c0 l0 .  .  .  q1 p1 r1 M
+        M  .  .  i0 .  .  .  d1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
 
-Board:
+Board1122:
     GenerationType: Manual
     Layout: |-
         M  M  M  M  M  M  M  M  M  M  M

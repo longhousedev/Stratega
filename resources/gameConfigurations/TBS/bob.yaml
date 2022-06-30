@@ -1,0 +1,14 @@
+Maps:
+
+    # k
+    # i c e l
+    # s t w g
+    # d p r q
+
+    # Dwarves vs Orcs
+    Map1: |-
+        M  M  M  M  M
+        M  k0 l0 .  M
+        M  g0 .  .  M
+        M  q0 .  .  M
+        M  M  M  M  M
