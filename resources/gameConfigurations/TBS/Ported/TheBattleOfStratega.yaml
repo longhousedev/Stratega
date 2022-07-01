@@ -91,33 +91,33 @@ Tiles:
 
 Board:
     GenerationType: Manual
-    Entities:
-        Iron:
-            Position: [1,9]
-        Iron:
-            Position: [1,10]
-        Iron:
-            Position: [7,2]
-        Iron:
-            Position: [8,2]
-        Iron:
-            Position: [8,3]
-        Iron:
-            Position: [8,15]
-        Iron:
-            Position: [5,10]
-        Fish:
-            Position: [4,10]
-        Fish:
-            Position: [4,11]
-        Fish:
-            Position: [6,7]
-        Fish:
-            Position: [5,7]
-        Fish:
-            Position: [1,2]
-        Fish:
-            Position: [0,2]
+    #Entities:
+    #    Iron:
+    #        Position: [1,9]
+    #    Iron:
+    #        Position: [1,10]
+    #    Iron:
+    #        Position: [7,2]
+    #    Iron:
+    #        Position: [8,2]
+    #    Iron:
+    #        Position: [8,3]
+    #    Iron:
+    #        Position: [8,15]
+    #    Iron:
+    #        Position: [5,10]
+    #    Fish:
+    #        Position: [4,10]
+    #    Fish:
+    #        Position: [4,11]
+    #    Fish:
+    #        Position: [6,7]
+    #    Fish:
+    #        Position: [5,7]
+    #    Fish:
+    #        Position: [1,2]
+    #    Fish:
+    #        Position: [0,2]
     Layout: |-
         .  .  .  .  .  a  .  .  a
         .  .  a  M  .  u  C  c1 .

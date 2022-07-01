@@ -232,8 +232,8 @@ Actions:
             - "ResourceGreaterEqual(Source.MiscellaneousActions, 1)"
             - "ResourceGreaterEqual(Source.AvailableActions, 1)"
         Cooldown: 1
-        Preconditions:
-            - "ResourceGreaterEqual(Source.Reloads, 1)"
+        #Preconditions:
+        #    - "ResourceGreaterEqual(Source.Reloads, 1)"
         Targets:
             Object:
                 Type: Object

@@ -19,11 +19,11 @@ GameConfig:
 GameRunner:
     AgentInitializationTime:
         Enabled: true
-        BudgetTimeMs: 2000
-        DisqualificationTimeMs: 5000
+        BudgetTimeMs: 50
+        DisqualificationTimeMs: 2000
     AgentComputationTime:
         Enabled: true
-        BudgetTimeMs: 100
+        BudgetTimeMs: 50
         DisqualificationTimeMs: 2000
         MaxNumberWarnings: 5000
 
@@ -103,7 +103,7 @@ Buffs:
         AdditiveModifier:
             AttackRange: -1
             AttackDamage: -1
-    CurseBuff:
+    Curse:
         AdditiveModifier:
             Health: 0
 
@@ -120,7 +120,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_6.png
         Symbol: k
         LineOfSightRange: 5
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 2
@@ -135,7 +135,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_2.png
         Symbol: i
         LineOfSightRange: 5
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 2
@@ -148,7 +148,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_3.png
         LineOfSightRange: 5
         Symbol: c
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 1
             Armour: 0
@@ -161,7 +161,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
         Symbol: e
-        Actions: [Move, Attack, Reinforce]
+        Actions: [Move, ArmouredAttack, Reinforce]
         Parameters:
             Actions: 2
             Armour: 2
@@ -174,7 +174,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: l
-        Actions: [Move, Attack, Reinforce]
+        Actions: [Move, ArmouredAttack, Reinforce]
         Parameters:
             Actions: 3
             Armour: 4
@@ -189,7 +189,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_2.png
         LineOfSightRange: 5
         Symbol: s
-        Actions: [Move, Attack, WarCry]
+        Actions: [Move, ArmouredAttack, WarCry]
         Parameters:
             Actions: 2
             Armour: 0
@@ -202,7 +202,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_3.png
         LineOfSightRange: 5
         Symbol: t
-        Actions: [Move, Attack, Disarm]
+        Actions: [Move, ArmouredAttack, Disarm]
         Parameters:
             Actions: 2
             Armour: 0
@@ -215,7 +215,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
         Symbol: w
-        Actions: [Move, Attack, Curse]
+        Actions: [Move, ArmouredAttack, Curse]
         Parameters:
             Actions: 2
             Armour: 0
@@ -228,7 +228,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: g
-        Actions: [Move, Attack, WarCry]
+        Actions: [Move, ArmouredAttack, WarCry]
         Parameters:
             Actions: 3
             Armour: 2
@@ -254,7 +254,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_2.png
         LineOfSightRange: 5
         Symbol: p
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 0
@@ -267,7 +267,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
         Symbol: r
-        Actions: [Move, Attack, Heal]
+        Actions: [Move, ArmouredAttack, Heal]
         Parameters:
             Actions: 2
             Armour: 0
@@ -293,7 +293,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: f
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 0
@@ -440,9 +440,9 @@ Actions:
                         AllowDiagonals: false
                 Conditions:
                     - "DifferentPlayer(Source, Target)"
-                    - "HasNoBuff(Target, CurseBuff)"
+                    - "HasNoBuff(Target, Curse)"
         Effects:
-            - "ApplyBuff(Target, CurseBuff, 4)"
+            - "ApplyBuff(Target, Curse, 4)"
             - "ModifyResource(Source.Actions, -1)"
 
     Heal:
@@ -559,12 +559,12 @@ ForwardModel:
                 - "ChangeResource(Source.MovementPoints, Source.MovementSpeed)"
                 - "SetToMaximum(Source.Actions)"
 
-        - OnTick:
-            Type: Entity
-            Conditions:
-                - "HasBuff(Source, CurseBuff)"
-            Effects:
-                - "Attack(Source.Health, 1)"
+        #- OnTick:
+        #    Type: Entity
+        #    Conditions:
+        #        - "HasBuff(Source, Curse)"
+        #    Effects:
+        #        - "Attack(Source.Health, 1)"
 
 
 GameDescription:
