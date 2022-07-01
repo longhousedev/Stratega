@@ -16,28 +16,28 @@ GameConfig:
 #        DisqualificationTimeMs: 1000
 #        MaxNumberWarnings: 5
 
-GameRunner:
-    AgentInitializationTime:
-        Enabled: true
-        BudgetTimeMs: 2000
-        DisqualificationTimeMs: 5000
-    AgentComputationTime:
-        Enabled: true
-        BudgetTimeMs: 100
-        DisqualificationTimeMs: 2000
-        MaxNumberWarnings: 5000
+#GameRunner:
+#    AgentInitializationTime:
+#        Enabled: true
+#        BudgetTimeMs: 2000
+#        DisqualificationTimeMs: 5000
+#    AgentComputationTime:
+#        Enabled: true
+#        BudgetTimeMs: 100
+#        DisqualificationTimeMs: 2000
+#        MaxNumberWarnings: 5000
 
 Agents:
   #- OSLAAgent:
   #- HumanAgent:
   - MCTSAgent:
-      FmCalls: 1000
-      Budget: TIME
-      RolloutLength: 10
+  #    FmCalls: 1000
+  #    Budget: TIME
+  #    RolloutLength: 10
   - MCTSAgent:
-      FmCalls: 1000
-      Budget: TIME
-      RolloutLength: 10
+  #    FmCalls: 1000
+  #    Budget: TIME
+  #    RolloutLength: 10
 
 GameRenderer:
     Resolution:
@@ -367,6 +367,7 @@ Actions:
                 #        Shape: Circle
                 #        Size: 1
                 Conditions:
+                    - "IsNotOccupied(Target)"
                     - "IsWalkable(Target)"
 
         Effects:

@@ -1134,7 +1134,7 @@ namespace SGA
                     using namespace ghc::filesystem;
 
                     path filePath =
-                       "C:/Users/Georg/Documents/GAIG/Stratega/resources/assets/OutLine.frag";
+                       "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/OutLine.frag";
                     // path filePath = "../../../assets/OutLine.frag";
                     // Convert path to an absolute path relative to the path of the configuration file
                     auto tmp = current_path();
@@ -1163,7 +1163,7 @@ namespace SGA
                 {
                     using namespace ghc::filesystem;
                     path filePath =
-                      "C:/Users/Georg/Documents/GAIG/Stratega/resources/assets/arial.ttf";
+                      "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/arial.ttf";
                     //path filePath = "../../../assets/arial.ttf";
                     // Convert path to an absolute path relative to the path of the configuration file
                     auto tmp = current_path();

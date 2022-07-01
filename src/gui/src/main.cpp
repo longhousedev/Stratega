@@ -8,7 +8,7 @@
 int main()
 {
 	boost::mt19937 rngEngine(0);
-	std::string configPath("C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/hi.yaml");
+	std::string configPath("C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
 	auto gameConfig = SGA::loadConfigFromYAML(configPath);
 
 	auto agents = gameConfig->generateAgents();
