@@ -120,7 +120,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_6.png
         Symbol: k
         LineOfSightRange: 5
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 2
@@ -135,7 +135,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_2.png
         Symbol: i
         LineOfSightRange: 5
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 2
@@ -148,7 +148,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_3.png
         LineOfSightRange: 5
         Symbol: c
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 1
             Armour: 0
@@ -161,7 +161,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
         Symbol: e
-        Actions: [Move, Attack, Reinforce]
+        Actions: [Move, ArmouredAttack, Reinforce]
         Parameters:
             Actions: 2
             Armour: 2
@@ -174,7 +174,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: l
-        Actions: [Move, Attack, Reinforce]
+        Actions: [Move, ArmouredAttack, Reinforce]
         Parameters:
             Actions: 3
             Armour: 4
@@ -189,7 +189,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_2.png
         LineOfSightRange: 5
         Symbol: s
-        Actions: [Move, Attack, WarCry]
+        Actions: [Move, ArmouredAttack, WarCry]
         Parameters:
             Actions: 2
             Armour: 0
@@ -202,7 +202,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_3.png
         LineOfSightRange: 5
         Symbol: t
-        Actions: [Move, Attack, Disarm]
+        Actions: [Move, ArmouredAttack, Disarm]
         Parameters:
             Actions: 2
             Armour: 0
@@ -215,7 +215,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
         Symbol: w
-        Actions: [Move, Attack, Curse]
+        Actions: [Move, ArmouredAttack, Curse]
         Parameters:
             Actions: 2
             Armour: 0
@@ -228,7 +228,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: g
-        Actions: [Move, Attack, WarCry]
+        Actions: [Move, ArmouredAttack, WarCry]
         Parameters:
             Actions: 3
             Armour: 2
@@ -254,7 +254,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_2.png
         LineOfSightRange: 5
         Symbol: p
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 0
@@ -267,7 +267,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
         Symbol: r
-        Actions: [Move, Attack, Heal]
+        Actions: [Move, ArmouredAttack, Heal]
         Parameters:
             Actions: 2
             Armour: 0
@@ -293,7 +293,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: f
-        Actions: [Move, Attack]
+        Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
             Armour: 0
@@ -316,9 +316,10 @@ Actions:
                 Type: Entity
                 ValidTargets: All
                 SamplingMethod:
-                    Type: Neighbours
+                    Type: Dijkstra
                     Options:
-                        Shape: AllPositions
+                        SearchSize: 4
+                        AllowDiagonals: false
                 Conditions:
                     - "DifferentPlayer(Source, Target)"
                     - "InRange(Source, Target, Source.AttackRange)"
@@ -386,7 +387,7 @@ Actions:
                 SamplingMethod:
                     Type: Dijkstra
                     Options:
-                        SearchSize: 1
+                        SearchSize: 3
                         AllowDiagonals: false
                 Conditions:
                     - "SamePlayer(Source, Target)"
@@ -522,10 +523,10 @@ Board:
         M  M  M  M  M  M  M  M  M  M  M
         M  .  .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
-        M  .  .  i0 .  .  .  d1 .  .  M
-        M  k0 c0 i0 .  .  .  d1 p1 k1 M
-        M  e0 c0 l0 .  .  .  q1 p1 r1 M
-        M  .  .  i0 .  .  .  d1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  e0 i0 .  .  .  k1 p1 .  M
+        M  .  c0 k0 .  .  .  q1 r1 .  M
+        M  .  .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
         M  M  M  M  M  M  M  M  M  M  M
