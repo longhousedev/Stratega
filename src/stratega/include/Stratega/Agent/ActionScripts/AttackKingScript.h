@@ -1,0 +1,8 @@
+//
+// Created by George Long on 07/10/2022.
+//
+
+#ifndef STRATEGA_ATTACKKINGSCRIPT_H
+#define STRATEGA_ATTACKKINGSCRIPT_H
+
+#endif  // STRATEGA_ATTACKKINGSCRIPT_H
