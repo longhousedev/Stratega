@@ -33,3 +33,7 @@ tests/gtest/*
 
 # Local History for Visual Studio Code
 .history/
+
+cmake/settings/Conan.cmake
+
+CMakeLists.txt

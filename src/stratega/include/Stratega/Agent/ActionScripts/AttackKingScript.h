@@ -1,8 +1,22 @@
-//
-// Created by George Long on 07/10/2022.
-//
+#pragma once
+#include <Stratega/Agent/ActionScripts/BaseActionScript.h>
+#include <map>
 
-#ifndef STRATEGA_ATTACKKINGSCRIPT_H
-#define STRATEGA_ATTACKKINGSCRIPT_H
 
-#endif  // STRATEGA_ATTACKKINGSCRIPT_H
+namespace SGA {
+class AttackKingScript : public BaseActionScript
+{
+  private:
+   double getHealth(const Entity& entity, const GameState& gamestate) const;
+
+
+  public:
+   AttackKingScript() : BaseActionScript() {};
+
+   Action getAction(const GameState& gameState, std::vector<Action>& actionSpace, int playerID) const override;
+   Action getActionForUnit(const GameState& gameState, std::vector<Action>& actionSpace, int playerID, int unitID) const override;
+   std::string toString() const override { return "AttackKingScript"; };
+
+};
+
+}

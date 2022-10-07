@@ -2,7 +2,7 @@ GameConfig:
     Type: TBS
     ActionTimer: 10s
     FogOfWar: false
-    RoundLimit: 50
+    RoundLimit: 200
 
 #GameRunner:
 #    AgentInitializationTime:
@@ -16,28 +16,31 @@ GameConfig:
 #        DisqualificationTimeMs: 1000
 #        MaxNumberWarnings: 5
 
-#GameRunner:
-#    AgentInitializationTime:
-#        Enabled: true
-#        BudgetTimeMs: 2000
-#        DisqualificationTimeMs: 5000
-#    AgentComputationTime:
-#        Enabled: true
-#        BudgetTimeMs: 100
-#        DisqualificationTimeMs: 2000
-#        MaxNumberWarnings: 5000
+GameRunner:
+    AgentInitializationTime:
+        Enabled: true
+        BudgetTimeMs: 2000
+        DisqualificationTimeMs: 5000
+    AgentComputationTime:
+        Enabled: true
+        BudgetTimeMs: 300
+        DisqualificationTimeMs: 2000
+        MaxNumberWarnings: 5000
 
 Agents:
+    #- MCTSAgent:
+#- MCTSAgent:
+  #- OSLAAgent:
   #- OSLAAgent:
   #- HumanAgent:
   - MCTSAgent:
-  #    FmCalls: 1000
-  #    Budget: TIME
-  #    RolloutLength: 10
+      FmCalls: 1000
+      Budget: TIME
+      RolloutLength: 10
   - MCTSAgent:
-  #    FmCalls: 1000
-  #    Budget: TIME
-  #    RolloutLength: 10
+      FmCalls: 1000
+      Budget: TIME
+      RolloutLength: 10
 
 GameRenderer:
     Resolution:
@@ -123,12 +126,12 @@ Entities:
         Actions: [Move, ArmouredAttack]
         Parameters:
             Actions: 2
-            Armour: 2
+            Armour: 0
             MovementSpeed: 1
             MovementPoints: 1
             AttackRange: 1
             AttackDamage: 1
-            Health: 15
+            Health: 25
     
     #Dwarves
     Infantry:
@@ -280,7 +283,7 @@ Entities:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
         Symbol: q
-        Actions: [Move, Attack, SummonWolf]
+        Actions: [Move, Attack]
         Parameters:
             Actions: 3
             Armour: 2

@@ -8,8 +8,9 @@
 int main()
 {
 	boost::mt19937 rngEngine(0);
-	std::string configPath("C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
-	auto gameConfig = SGA::loadConfigFromYAML(configPath);
+	//std::string configPath("C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
+        std::string configPath("/Users/george/Documents/GAIG/StrategaTest/resources/gameConfigurations/TBS/hi.yaml");
+        auto gameConfig = SGA::loadConfigFromYAML(configPath);
 
 	auto agents = gameConfig->generateAgents();
 	// Set seed of the agents for deterministic behaviour - ToDo Should we move this into Stratega & Should it be done automatically with generateAgents?
