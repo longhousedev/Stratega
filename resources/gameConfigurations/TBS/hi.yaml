@@ -2,7 +2,7 @@ GameConfig:
     Type: TBS
     ActionTimer: 10s
     FogOfWar: false
-    RoundLimit: 200
+    RoundLimit: 50
 
 #GameRunner:
 #    AgentInitializationTime:
@@ -36,11 +36,11 @@ Agents:
   - MCTSAgent:
       FmCalls: 1000
       Budget: TIME
-      RolloutLength: 10
+      RolloutLength: 20
   - MCTSAgent:
       FmCalls: 1000
       Budget: TIME
-      RolloutLength: 10
+      RolloutLength: 20
 
 GameRenderer:
     Resolution:

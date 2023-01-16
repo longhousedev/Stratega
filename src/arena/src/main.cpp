@@ -13,11 +13,11 @@ int main(int argc, char** argv)
 	auto seed = parser.getCmdOption<unsigned int>("-seed", 0);
 	auto numberOfGames = parser.getCmdOption<unsigned int>("-gamesNumber", 1);
 	auto playerCount = parser.getCmdOption<int>("-playerCount", 2);
-	auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/res.yaml");
+	auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/res.yaml");
 	//Currently obsolete but configPath shouldn't have a default value. So we keep it until then
-        auto configPath = parser.getCmdOption< std::string >("-configPath", "C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/hi.yaml");
+        auto configPath = parser.getCmdOption< std::string >("-configPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
 	//Optional
-	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/bob.yaml");
+	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/orc_elf_uncosted_9.yaml");
 
 	if (configPath.empty())
 	{

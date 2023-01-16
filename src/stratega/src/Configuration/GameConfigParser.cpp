@@ -1132,7 +1132,15 @@ namespace SGA
                 else
                 {
                     using namespace ghc::filesystem;
-                     path filePath = "/Users/george/Documents/GAIG/StrategaTest/resources/gameConfigurations/TBS/hi.yaml";
+                    #ifdef _WIN32
+                        path filePath = "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/OutLine.frag";
+                    #elif __APPLE__
+                        path filePath = "/Users/george/Documents/GAIG/StrategaTest/resources/assets/OutLine.frag";
+                    #elif __linux__
+                        path filePath = "../../assets/OutLine.frag";
+                    #elif __unix__
+                        path filePath = "../../assets/OutLine.frag";
+                    #endif
                     //path filePath =
                     //   "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/OutLine.frag";
                     // path filePath = "../../../assets/OutLine.frag";
@@ -1162,7 +1170,16 @@ namespace SGA
                 else
                 {
                     using namespace ghc::filesystem;
-                    path filePath = "/Users/george/Documents/GAIG/StrategaTest/resources/gameConfigurations/TBS/hi.yaml";
+                    #ifdef _WIN32
+                        path filePath = "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/arial.ttf";
+                    #elif __APPLE__
+                        path filePath = "/Users/george/Documents/GAIG/StrategaTest/resources/assets/arial.ttf";
+                    #elif __linux__
+                        path filePath = "../../assets/arial.ttf";
+                    #elif __unix__
+                        path filePath = "../../assets/arial.ttf";
+                    #endif
+                    //path filePath = "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/arial.ttf";
                     //path filePath =
                     //  "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/assets/arial.ttf";
                     //path filePath = "../../../assets/arial.ttf";

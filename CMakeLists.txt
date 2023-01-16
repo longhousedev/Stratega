@@ -2,12 +2,16 @@
 
 # Language Setup
 
-#project(Stratega LANGUAGES C CXX) # Uncomment if using Windows / Linux
-project(Stratega LANGUAGES C CXX OBJCXX OBJC) # Uncomment if using macOS
-enable_language(OBJC) # Uncomment if using macOS
-enable_language(OBJCXX) # Uncomment if using macOS
+IF(WIN32 OR CMAKE_SYSTEM_NAME MATCHES Linux)
+    project(Stratega LANGUAGES C CXX) # Uncomment if using Windows / Linux
+endif()
 
-set (CMAKE_OSX_ARCHITECTURES "arm64") # Uncomment if using macOS with M1 processor (arm64)
+IF (APPLE)
+    project(Stratega LANGUAGES C CXX OBJCXX OBJC) # Uncomment if using macOS
+    enable_language(OBJC) # Uncomment if using macOS
+    enable_language(OBJCXX) # Uncomment if using macOS
+    set (CMAKE_OSX_ARCHITECTURES "arm64") # Uncomment if using macOS with M1 processor (arm64)
+endif()
 
 # project settings
 set(CMAKE_CONFIG_FOLDER "cmake")
@@ -35,7 +39,9 @@ set(SUBPROJ_GUI_DIR "${PROJ_SOURCES_DIR}/gui")
 set(SUBPROJ_GUI_SRC_DIR "${SUBPROJ_GUI_DIR}/src")
 
 # options
-option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON) # Set to 'ON' if using macOS
+if (APPLE)
+    option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON) # Set to 'ON' if using macOS
+endif()
 option(ENABLE_BUILD_DOCS "Enable building the docs. Requires doxygen to be installed on the system" OFF)
 option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
 option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy" OFF)
@@ -55,8 +61,9 @@ option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors (If ENABLE_STRATEGA
 
 option(SGA_BUILD_HEADLESS "Compile Stratega in headless mode" OFF)
 
-option(SGA_BUILD_SFML_FROM_SOURCE "Compile SFML 2.6.x" ON) # Set to 'ON' if using macOS with M1 processor (arm64)
-
+if (APPLE)
+    option(SGA_BUILD_SFML_FROM_SOURCE "Compile SFML 2.6.x" OFF) # Set to 'ON' if using macOS with M1 processor (arm64)
+endif()
 
 # On linux SFML is not (yet) available from conan due to a missing lib dependency in their recipe.
 # We will have to fetch it manually in this case and add it to our project.
