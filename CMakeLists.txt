@@ -3,10 +3,12 @@
 # Language Setup
 
 IF(WIN32 OR CMAKE_SYSTEM_NAME MATCHES Linux)
+    message(STATUS "BINDOWS")
     project(Stratega LANGUAGES C CXX) # Uncomment if using Windows / Linux
 endif()
 
 IF (APPLE)
+    message(STATUS "BAPPLE")
     project(Stratega LANGUAGES C CXX OBJCXX OBJC) # Uncomment if using macOS
     enable_language(OBJC) # Uncomment if using macOS
     enable_language(OBJCXX) # Uncomment if using macOS

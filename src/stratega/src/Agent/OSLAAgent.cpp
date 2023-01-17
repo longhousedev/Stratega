@@ -1,6 +1,7 @@
 #include <Stratega/Agent/OSLAAgent.h>
 #include <Stratega/Agent/Heuristic/MinimizeDistanceHeuristic.h>
 #include <Stratega/Agent/Heuristic/WizardWarsHeuristic.h>
+#include <Stratega/Agent/Heuristic/AggresiveHeuristic.h>
 
 
 namespace SGA
@@ -8,7 +9,7 @@ namespace SGA
 	ActionAssignment OSLAAgent::computeAction(GameState state, const ForwardModel& forwardModel, Timer /*timer*/)
 	{
 		std::vector<Action> actionSpace = forwardModel.generateActions(state, getPlayerID());
-		WizardWarsHeuristic heuristic(state);
+		AggresiveHeuristic heuristic(state);
 		double bestHeuristicValue = -std::numeric_limits<double>::max();
 
 		int bestActionIndex = 0;

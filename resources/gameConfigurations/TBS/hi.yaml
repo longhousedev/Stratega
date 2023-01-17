@@ -34,13 +34,14 @@ Agents:
   #- OSLAAgent:
   #- HumanAgent:
   - MCTSAgent:
-      FmCalls: 1000
+      FmCalls: 10000
       Budget: TIME
-      RolloutLength: 20
+      RolloutLength: 5
+  #- HumanAgent:
   - MCTSAgent:
-      FmCalls: 1000
+      FmCalls: 10000
       Budget: TIME
-      RolloutLength: 20
+      RolloutLength: 5
 
 GameRenderer:
     Resolution:
@@ -131,7 +132,7 @@ Entities:
             MovementPoints: 1
             AttackRange: 1
             AttackDamage: 1
-            Health: 25
+            Health: 10
     
     #Dwarves
     Infantry:
@@ -145,8 +146,8 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 1
-            AttackDamage: 3
-            Health: 4
+            AttackDamage: 30
+            Health: 40
     Cannon:
         Sprite: ../../assets/Entities/unit_3.png
         LineOfSightRange: 5
@@ -158,8 +159,8 @@ Entities:
             MovementSpeed: 1
             MovementPoints: 1
             AttackRange: 4
-            AttackDamage: 5
-            Health: 1
+            AttackDamage: 50
+            Health: 10
     Engineer:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
@@ -171,8 +172,8 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 1
-            AttackDamage: 2
-            Health: 4
+            AttackDamage: 20
+            Health: 40
     Commander:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
@@ -184,8 +185,8 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 1
-            AttackDamage: 4
-            Health: 10
+            AttackDamage: 40
+            Health: 100
 
     #Orcs
     Slasher:
@@ -498,6 +499,13 @@ EntityGroups:
 # s t w g
 # d p r q
 
+Board91:
+    GenerationType: Manual
+    Layout: |-
+        .  g0 .  .
+        g0 k1 g0 .
+        .  g0 k0 .
+
 Board11:
     GenerationType: Manual
     Layout: |-
@@ -520,21 +528,21 @@ Board1:
         M . . . e0 . M
         M M M M M M M
 
-Board:
+Boardtest:
     GenerationType: Manual
     Layout: |-
         M  M  M  M  M  M  M  M  M  M  M
+        M  k0  .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
-        M  .  .  .  .  .  .  .  .  .  M
-        M  .  e0 i0 .  .  .  k1 p1 .  M
-        M  .  c0 k0 .  .  .  q1 r1 .  M
-        M  .  .  .  .  .  .  .  .  .  M
+        M  s0 .  . .  .  .   .  .  .  M
+        M  s0 .  . .  .  .   .  .  k1  M
+        M  g0 .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
         M  .  .  .  .  .  .  .  .  .  M
         M  M  M  M  M  M  M  M  M  M  M
 
-Board1122:
+Board:
     GenerationType: Manual
     Layout: |-
         M  M  M  M  M  M  M  M  M  M  M

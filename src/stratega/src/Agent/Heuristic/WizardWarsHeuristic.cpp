@@ -106,7 +106,7 @@ double WizardWarsHeuristic::evaluateGameState(
    // HARDCODED
    score += (1 / (enemyKingHP + 1)) * 50;
 
-   return score;
+   return 0;
 }
 WizardWarsHeuristic::WizardWarsHeuristic(GameState state)
 {

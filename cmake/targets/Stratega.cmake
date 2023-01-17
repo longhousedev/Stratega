@@ -79,6 +79,7 @@ set(STRATEGA_SOURCE_FILES
         Utils/cparse/shunting-yard.cpp
         Utils/cparse/builtin-features.cpp
         Agent/Heuristic/WizardWarsHeuristic.cpp
+        Agent/Heuristic/AggresiveHeuristic.cpp
         Agent/ActionScripts/AttackKingScript.cpp)
 if(NOT SGA_BUILD_HEADLESS)
    list(APPEND STRATEGA_SOURCE_FILES

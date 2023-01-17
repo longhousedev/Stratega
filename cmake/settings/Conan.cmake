@@ -14,9 +14,9 @@ macro(run_conan)
             https://api.bintray.com/conan/bincrafters/public-conan)
 
     conan_cmake_run(
-            #Uncomment if building for M1 Apple
             IF (APPLE)
-                ARCH armv8
+                message(STATUS "BAPPLE")
+                #ARCH armv8 #Uncomment if building for M1 Apple
             endif()
             CONANFILE ${DEPENDENCY_DIR}/${CONANFILE}
             CONAN_COMMAND ${CONAN_PATH}
