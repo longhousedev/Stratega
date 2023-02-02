@@ -36,12 +36,12 @@ Agents:
   - MCTSAgent:
       FmCalls: 10000
       Budget: TIME
-      RolloutLength: 5
+      RolloutLength: 20
   #- HumanAgent:
   - MCTSAgent:
       FmCalls: 10000
       Budget: TIME
-      RolloutLength: 5
+      RolloutLength: 20
 
 GameRenderer:
     Resolution:

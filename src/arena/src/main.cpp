@@ -15,9 +15,15 @@ int main(int argc, char** argv)
 	auto playerCount = parser.getCmdOption<int>("-playerCount", 2);
 	auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/res.yaml");
 	//Currently obsolete but configPath shouldn't have a default value. So we keep it until then
-        auto configPath = parser.getCmdOption< std::string >("-configPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
+	#ifdef _WIN32
+		auto configPath = parser.getCmdOption< std::string >("-configPath","C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
+	#elif __APPLE__
+		auto configPath = parser.getCmdOption< std::string >("-configPath", "/Users/george/Documents/GAIG/StrategaTest/resources/gameConfigurations/TBS/hi.yaml");
+	#elif __linux__
+		auto configPath = parser.getCmdOption< std::string >("-configPath", "../resources/gameConfigurations/TBS/hi.yaml");
+	#endif
 	//Optional
-	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/orc_elf_uncosted_9.yaml");
+	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/out/build/x64-release/bin/dwarf_elf_uncosted_1.yaml");
 
 	if (configPath.empty())
 	{
