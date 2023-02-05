@@ -2,6 +2,8 @@
 
 # Language Setup
 
+project(Stratega LANGUAGES C CXX)
+
 IF(WIN32 OR CMAKE_SYSTEM_NAME MATCHES Linux)
     message(STATUS "BINDOWS")
     project(Stratega LANGUAGES C CXX) # Uncomment if using Windows / Linux

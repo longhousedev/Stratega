@@ -146,8 +146,8 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 1
-            AttackDamage: 30
-            Health: 40
+            AttackDamage: 3
+            Health: 4
     Cannon:
         Sprite: ../../assets/Entities/unit_3.png
         LineOfSightRange: 5
@@ -159,8 +159,8 @@ Entities:
             MovementSpeed: 1
             MovementPoints: 1
             AttackRange: 4
-            AttackDamage: 50
-            Health: 10
+            AttackDamage: 5
+            Health: 1
     Engineer:
         Sprite: ../../assets/Entities/unit_10.png
         LineOfSightRange: 5
@@ -172,8 +172,8 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 1
-            AttackDamage: 20
-            Health: 40
+            AttackDamage: 2
+            Health: 4
     Commander:
         Sprite: ../../assets/Entities/unit_8.png
         LineOfSightRange: 5
@@ -185,8 +185,8 @@ Entities:
             MovementSpeed: 2
             MovementPoints: 2
             AttackRange: 1
-            AttackDamage: 40
-            Health: 100
+            AttackDamage: 4
+            Health: 10
 
     #Orcs
     Slasher:
@@ -247,7 +247,7 @@ Entities:
         Symbol: d
         Actions: [Move, Attack]
         Parameters:
-            Actions: 3
+            Actions: 2
             Armour: 1
             MovementSpeed: 3
             MovementPoints: 3
@@ -491,8 +491,9 @@ Actions:
             - "ModifyResource(Source.Actions, -1)"
 
 EntityGroups:
-    Units: [Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord]
-    Attackable: [Infantry, Cannon, Engineer]
+    Units: [King, Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord, SwordDancer, Panther, Druid, Prince]
+    Attackable: [King, Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord, SwordDancer, Panther, Druid, Prince]
+    Support: [Engineer, Druid]
 
 # k
 # i c e l
