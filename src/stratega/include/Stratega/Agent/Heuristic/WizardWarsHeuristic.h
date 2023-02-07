@@ -8,8 +8,6 @@ namespace SGA {
 
    class WizardWarsHeuristic : public StateHeuristic {
      public:
-      int armySizes[2] = {0, 0};
-      double armyHealth[2] = {0, 0};
       WizardWarsHeuristic();
       WizardWarsHeuristic(GameState state);
       double evaluateGameState(const ForwardModel& forwardModel, GameState& gameState, const int playerID) override;

@@ -1,6 +1,7 @@
 #include <Stratega/Agent/Heuristic/AggresiveHeuristic.h>
 #include <map>
 #include <set>
+#include <list>
 #include <cmath>
 
 namespace SGA {
@@ -9,8 +10,8 @@ double AggresiveHeuristic::evaluateGameState(
    const ForwardModel& /*forwardModel*/, GameState& gameState, int playerID)
 {
     // Variables
-    std::map< int, Vector2f > positions;
-    std::list<Vector2f > supportPositions;
+    std::map<int, Vector2f> positions;
+    std::list<Vector2f> supportPositions;
     double totalDistance = 0;
     int kingX = 0;
     int kingY = 0;
@@ -27,13 +28,13 @@ double AggresiveHeuristic::evaluateGameState(
     double supportUnitsinRange = 0;
 
     // Weights
-    double opponentArmySizeMOD = 1;
+    double opponentArmySizeMOD = 4;
     double playerArmySizeMOD = 1;
     double playerArmyHealthMOD = 0.1;
-    double opponentArmyHealthMOD = 0.1;
+    double opponentArmyHealthMOD = 0.4;
     double playerKingHPMOD = 1;
-    double opponentKingHPMOD = 1;
-    double meanDistanceMOD = 1;
+    double opponentKingHPMOD = 8;
+    double meanDistanceMOD = 4;
     double supportUnitsinRangeMOD = 1;
 
     // If playerID is not the current player
