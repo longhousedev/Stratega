@@ -37,24 +37,19 @@ double DefensiveHeuristic::evaluateGameState(
    double meanDistanceMOD = 0.5;
    double supportUnitsinRangeMOD = 1;
 
-   // If playerID is not the current player
-   if(playerID != gameState.getCurrentTBSPlayer()) {
-      return -1000000000000;
-   }
-
    // Win check
    if(gameState.isGameOver()) {
       if(gameState.getWinnerID() == playerID)
          return 10000000000000;
       else
-         return -1000000000000;
+         return -10000000000000;
    }
 
    // Register Entities
    for(const auto& entity : gameState.getEntities()) {
       positions.emplace(entity.getID(), entity.getPosition());
 
-      if(entity.getOwnerID() != gameState.getCurrentTBSPlayer()) {
+      if(entity.getOwnerID() != playerID) {
          opponentEntities.insert(entity.getID());
          auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
 
@@ -71,7 +66,7 @@ double DefensiveHeuristic::evaluateGameState(
             opponentArmyHealth += entity.getParameter("Health");
          }
 
-      } else if(entity.getOwnerID() == gameState.getCurrentTBSPlayer()) {
+      } else if(entity.getOwnerID() == playerID) {
          playerEntities.insert(entity.getID());
          auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
          if(entityType.getName() == "King") {
@@ -107,6 +102,8 @@ double DefensiveHeuristic::evaluateGameState(
       }
    }
 
+   meanDistance = totalDistance / static_cast< double >(playerEntities.size());
+
    // Negative modifiers
    score -= meanDistance * meanDistanceMOD;
    score -= opponentKingHP * opponentKingHPMOD;
@@ -119,12 +116,10 @@ double DefensiveHeuristic::evaluateGameState(
    score += playerEntities.size() * playerArmySizeMOD;
    score += supportUnitsinRange * supportUnitsinRangeMOD;
 
-   return score *= 1;
+   return score;
 }
 DefensiveHeuristic::DefensiveHeuristic(GameState state)
 {
-   int playerID = state.getCurrentTBSPlayer();
-   int test = 1;
 }
 DefensiveHeuristic::DefensiveHeuristic() {}
 }  // namespace SGA

@@ -39,24 +39,19 @@ double WizardWarsHeuristic::evaluateGameState(
    double meanDistanceMOD = 1;
    double supportUnitsinRangeMOD = 1;
 
-   // If playerID is not the current player
-   if(playerID != gameState.getCurrentTBSPlayer()) {
-      return -1000000000000;
-   }
-
    // Win check
    if(gameState.isGameOver()) {
       if(gameState.getWinnerID() == playerID)
          return 10000000000000;
       else
-         return -1000000000000;
+         return -10000000000000;
    }
 
    // Register Entities
    for(const auto& entity : gameState.getEntities()) {
       positions.emplace(entity.getID(), entity.getPosition());
 
-      if(entity.getOwnerID() != gameState.getCurrentTBSPlayer()) {
+      if(entity.getOwnerID() != playerID) {
          opponentEntities.insert(entity.getID());
          auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
 
@@ -73,7 +68,7 @@ double WizardWarsHeuristic::evaluateGameState(
             opponentArmyHealth += entity.getParameter("Health");
          }
 
-      } else if(entity.getOwnerID() == gameState.getCurrentTBSPlayer()) {
+      } else if(entity.getOwnerID() == playerID) {
          playerEntities.insert(entity.getID());
          auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
          if(entityType.getName() == "King") {
@@ -109,6 +104,8 @@ double WizardWarsHeuristic::evaluateGameState(
       }
    }
 
+   meanDistance = totalDistance / static_cast< double >(playerEntities.size());
+
    // Negative modifiers
    score -= meanDistance * meanDistanceMOD;
    score -= opponentKingHP * opponentKingHPMOD;
@@ -121,14 +118,11 @@ double WizardWarsHeuristic::evaluateGameState(
    score += playerEntities.size() * playerArmySizeMOD;
    score += supportUnitsinRange * supportUnitsinRangeMOD;
 
-   return score *= 1;
-
-   return 0;
+   return score;
 }
 WizardWarsHeuristic::WizardWarsHeuristic(GameState state)
 {
-   int playerID = state.getCurrentTBSPlayer();
-   int test = 1;
+
 }
 WizardWarsHeuristic::WizardWarsHeuristic() {}
 }  // namespace SGA
