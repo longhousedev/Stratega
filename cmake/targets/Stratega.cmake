@@ -80,7 +80,13 @@ set(STRATEGA_SOURCE_FILES
         Utils/cparse/builtin-features.cpp
         Agent/Heuristic/WizardWarsHeuristic.cpp
         Agent/Heuristic/AggresiveHeuristic.cpp
-        Agent/ActionScripts/AttackKingScript.cpp)
+        Agent/Heuristic/DefensiveHeuristic.cpp
+        Agent/ActionScripts/AttackKingScript.cpp
+        Agent/WizardWarsAgent/AggresiveAgent.cpp
+        Agent/WizardWarsAgent/BalancedAgent.cpp
+        Agent/WizardWarsAgent/DefensiveAgent.cpp
+
+)
 if(NOT SGA_BUILD_HEADLESS)
    list(APPEND STRATEGA_SOURCE_FILES
         GUI/AssetCache.cpp        

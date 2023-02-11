@@ -11,6 +11,11 @@
 #include <Stratega/Agent/RuleBasedAgents/KTKCombatAgent.h>
 #include <Stratega/Agent/RuleBasedAgents/PusherAgent.h>
 #include <Stratega/Agent/UnitMCTSAgent/UnitMCTSAgent.h>
+#include <Stratega/Agent/WizardWarsAgent/AggresiveAgent.h>
+#include <Stratega/Agent/WizardWarsAgent/BalancedAgent.h>
+#include <Stratega/Agent/WizardWarsAgent/DefensiveAgent.h>
+
+
 
 namespace SGA
 {
@@ -75,6 +80,10 @@ namespace SGA
 		factory.registerAgent<PusherAgent>("PusherAgent");
         factory.registerAgent<KTKCombatAgent>("KTKCombatAgent");
 		factory.registerAgent<UnitMCTSAgent, UnitMCTSParameters>("UnitMCTSAgent");
+        factory.registerAgent< AggresiveAgent, MCTSParameters >("AggresiveAgent");
+        factory.registerAgent< BalancedAgent, MCTSParameters >("BalancedAgent");
+        factory.registerAgent< DefensiveAgent, MCTSParameters >("DefensiveAgent");
+
 		
 		return factory;
 	}
