@@ -1,0 +1,592 @@
+GameConfig:
+    Type: TBS
+    ActionTimer: 10s
+    FogOfWar: false
+    RoundLimit: 50
+
+#GameRunner:
+#    AgentInitializationTime:
+#        Enabled: true
+#        BudgetTimeMs: 1000
+#        DisqualificationTimeMs: 5000
+
+#    AgentComputationTime:
+#        Enabled: true
+#        BudgetTimeMs: 100
+#        DisqualificationTimeMs: 1000
+#        MaxNumberWarnings: 5
+
+GameRunner:
+    AgentInitializationTime:
+        Enabled: true
+        BudgetTimeMs: 2000
+        DisqualificationTimeMs: 5000
+    AgentComputationTime:
+        Enabled: true
+        BudgetTimeMs: 300
+        DisqualificationTimeMs: 2000
+        MaxNumberWarnings: 5000
+
+Agents:
+    #- MCTSAgent:
+#- MCTSAgent:
+  #- OSLAAgent:
+  #- OSLAAgent:
+  #- HumanAgent:
+  - BalancedAgent:
+      FmCalls: 10000
+      Budget: TIME
+      RolloutLength: 20
+  #- HumanAgent:
+  - DefensiveAgent:
+      FmCalls: 10000
+      Budget: TIME
+      RolloutLength: 20
+
+GameRenderer:
+    Resolution:
+        Width: 800
+        Height: 600
+    Default Assets:
+        FogOfWar: ../../assets/Tiles/notVisible.png
+    GridIsIsometric: true
+    TileSpriteOrigin:
+        Width: 128
+        Height: 112
+    EntitySpriteOrigin:
+        Width: 256
+        Height: 360
+    TileSpriteSize:
+        Width: 256
+        Height: 144
+    EntitySpriteSize:
+        Width: 512
+        Height: 512
+    #Optional:
+    #Font: ../../assets/arial.ttf
+    #OutlineShader: ../../assets/OutLine.frag
+
+Player:
+    Parameters:
+        Gold: [0,0,1000]
+        Prod: [0,5,100]
+        Score: [0,0,1000]
+
+Tiles:
+    Plain:
+        Sprite: ../../assets/Tiles/plain.png
+        Symbol: .
+        IsWalkable: true
+        DefaultTile: true
+    Water:
+        Sprite: ../../assets/Tiles/water.png
+        Symbol: W
+        IsWalkable: false
+    Mountain:
+        Sprite: ../../assets/Tiles/rock.png
+        Symbol: M
+        IsWalkable: false
+        BlocksSight: true
+    Forest:
+        Sprite: ../../assets/Tiles/forest.png
+        Symbol: F
+        IsWalkable: true
+
+Buffs:
+    Reinforce:
+        AdditiveModifier:
+            Armour: 3
+    StandGround:
+        AdditiveModifier:
+            Armour: 2
+    WarCry:
+        AdditiveModifier:
+            AttackDamage: 1
+            MovementPoints: 1
+    Disarm:
+        AdditiveModifier:
+            AttackRange: -1
+            AttackDamage: -1
+    CurseBuff:
+        AdditiveModifier:
+            Health: 0
+
+# k
+# i c e l
+# s t w g
+# d p r q
+
+
+
+Entities:
+    
+    King:
+        Sprite: ../../assets/Entities/unit_6.png
+        Symbol: k
+        LineOfSightRange: 5
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 1
+            MovementPoints: 1
+            AttackRange: 1
+            AttackDamage: 1
+            Health: 10
+    
+    #Dwarves
+    Infantry:
+        Sprite: ../../assets/Entities/unit_2.png
+        Symbol: i
+        LineOfSightRange: 5
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Actions: 2
+            Armour: 2
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 1
+            AttackDamage: 3
+            Health: 4
+    Cannon:
+        Sprite: ../../assets/Entities/unit_3.png
+        LineOfSightRange: 5
+        Symbol: c
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Actions: 1
+            Armour: 0
+            MovementSpeed: 1
+            MovementPoints: 1
+            AttackRange: 4
+            AttackDamage: 5
+            Health: 1
+    Engineer:
+        Sprite: ../../assets/Entities/unit_10.png
+        LineOfSightRange: 5
+        Symbol: e
+        Actions: [Move, ArmouredAttack, Reinforce]
+        Parameters:
+            Actions: 2
+            Armour: 2
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 1
+            AttackDamage: 2
+            Health: 4
+    Commander:
+        Sprite: ../../assets/Entities/unit_8.png
+        LineOfSightRange: 5
+        Symbol: l
+        Actions: [Move, ArmouredAttack, Reinforce]
+        Parameters:
+            Actions: 3
+            Armour: 4
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 1
+            AttackDamage: 4
+            Health: 10
+
+    #Orcs
+    Slasher:
+        Sprite: ../../assets/Entities/unit_2.png
+        LineOfSightRange: 5
+        Symbol: s
+        Actions: [Move, ArmouredAttack, WarCry]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 3
+            MovementPoints: 3
+            AttackRange: 1
+            AttackDamage: 4
+            Health: 6
+    Thrower:
+        Sprite: ../../assets/Entities/unit_3.png
+        LineOfSightRange: 5
+        Symbol: t
+        Actions: [Move, ArmouredAttack, Disarm]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 2
+            AttackDamage: 3
+            Health: 4
+    Wizard:
+        Sprite: ../../assets/Entities/unit_10.png
+        LineOfSightRange: 5
+        Symbol: w
+        Actions: [Move, ArmouredAttack, Curse]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 2
+            AttackDamage: 2
+            Health: 3
+    Warlord:
+        Sprite: ../../assets/Entities/unit_8.png
+        LineOfSightRange: 5
+        Symbol: g
+        Actions: [Move, ArmouredAttack, WarCry]
+        Parameters:
+            Actions: 3
+            Armour: 2
+            MovementSpeed: 3
+            MovementPoints: 3
+            AttackRange: 1
+            AttackDamage: 5
+            Health: 8
+    SwordDancer:
+        Sprite: ../../assets/Entities/unit_3.png
+        LineOfSightRange: 5
+        Symbol: d
+        Actions: [Move, Attack]
+        Parameters:
+            Actions: 2
+            Armour: 1
+            MovementSpeed: 3
+            MovementPoints: 3
+            AttackRange: 2
+            AttackDamage: 3
+            Health: 4
+    Panther:
+        Sprite: ../../assets/Entities/unit_2.png
+        LineOfSightRange: 5
+        Symbol: p
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 5
+            MovementPoints: 5
+            AttackRange: 2
+            AttackDamage: 3
+            Health: 4
+    Druid:
+        Sprite: ../../assets/Entities/unit_10.png
+        LineOfSightRange: 5
+        Symbol: r
+        Actions: [Move, ArmouredAttack, Heal]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 2
+            AttackDamage: 2
+            Health: 3
+    Prince:
+        Sprite: ../../assets/Entities/unit_8.png
+        LineOfSightRange: 5
+        Symbol: q
+        Actions: [Move, Attack]
+        Parameters:
+            Actions: 3
+            Armour: 2
+            MovementSpeed: 4
+            MovementPoints: 4
+            AttackRange: 1
+            AttackDamage: 6
+            Health: 7
+    Wolf:
+        Sprite: ../../assets/Entities/unit_8.png
+        LineOfSightRange: 5
+        Symbol: f
+        Actions: [Move, ArmouredAttack]
+        Parameters:
+            Actions: 2
+            Armour: 0
+            MovementSpeed: 2
+            MovementPoints: 2
+            AttackRange: 1
+            AttackDamage: 3
+            Health: 3
+
+
+
+Actions:
+    Attack:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 1
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 4
+                        AllowDiagonals: false
+                Conditions:
+                    - "DifferentPlayer(Source, Target)"
+                    - "InRange(Source, Target, Source.AttackRange)"
+        Effects:
+            - "Attack(Target.Health, Source.AttackDamage)"
+            - "ModifyResource(Source.Actions, -1)"
+
+
+    ArmouredAttack:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 1
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 4
+                        AllowDiagonals: false
+                Conditions:
+                    - "DifferentPlayer(Source, Target)"
+                    - "InRange(Source, Target, Source.AttackRange)"
+        Effects:
+            - "ArmouredAttack(Target.Health, Source.AttackDamage, Target.Armour)"
+            - "ModifyResource(Source.Actions, -1)"
+
+
+    Move:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.MovementPoints, 1)"
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Targets:
+            Target:
+                Type: Position
+                SamplingMethod: 
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 1
+                        AllowDiagonals: false
+                #    Type: Neighbours
+                #    Options:
+                #        Shape: Circle
+                #        Size: 1
+                Conditions:
+                    - "IsNotOccupied(Target)"
+                    - "IsWalkable(Target)"
+
+        Effects:
+            - "Move(Source, Target)"
+            - "ModifyResource(Source.MovementPoints, -1)"
+    
+    Reinforce:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 3
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 3
+                        AllowDiagonals: false
+                Conditions:
+                    - "SamePlayer(Source, Target)"
+                    - "HasNoBuff(Target, Reinforce)"
+        Effects:
+            - "ApplyBuff(Target, Reinforce, 2)"
+            - "ModifyResource(Source.Actions, -1)"
+    
+    WarCry:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 3
+        Effects:
+            - "ApplyBuff(Source, WarCry, 2)"
+            - "ModifyResource(Source.Actions, -1)"
+
+    Disarm:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 3
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 2
+                        AllowDiagonals: false
+                Conditions:
+                    - "DifferentPlayer(Source, Target)"
+                    - "HasNoBuff(Target, Disarm)"
+        Effects:
+            - "ApplyBuff(Target, Disarm, 2)"
+            - "ModifyResource(Source.Actions, -1)"
+
+    Curse:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 3
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 3
+                        AllowDiagonals: false
+                Conditions:
+                    - "DifferentPlayer(Source, Target)"
+                    - "HasNoBuff(Target, CurseBuff)"
+        Effects:
+            - "ApplyBuff(Target, CurseBuff, 4)"
+            - "ModifyResource(Source.Actions, -1)"
+
+    Heal:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 3
+        Targets:
+            Target:
+                Type: Entity
+                ValidTargets: All
+                SamplingMethod:
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 3
+                        AllowDiagonals: false
+                Conditions:
+                    - "SamePlayer(Source, Target)"
+        Effects:
+            - "ModifyResource(Target.Health, 3)"
+            - "ModifyResource(Source.Actions, -1)"
+
+    SummonWolf:
+        Type: EntityAction
+        Preconditions:
+            - "ResourceGreaterEqual(Source.Actions, 1)"
+        Cooldown: 4
+        Targets:
+            Target:
+                Type: Position
+                SamplingMethod: 
+                    Type: Dijkstra
+                    Options:
+                        SearchSize: 2
+                        AllowDiagonals: false
+                Conditions:
+                    - "IsWalkable(Target)"
+        Effects:
+            - "SpawnEntity(Source, Wolf, Target)"
+            - "ModifyResource(Source.Actions, -1)"
+
+EntityGroups:
+    Units: [King, Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord, SwordDancer, Panther, Druid, Prince]
+    Attackable: [King, Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord, SwordDancer, Panther, Druid, Prince]
+    Support: [Engineer, Druid]
+
+# k
+# i c e l
+# s t w g
+# d p r q
+
+Board91:
+    GenerationType: Manual
+    Layout: |-
+        .  g0 .  .
+        g0 k1 g0 .
+        .  g0 k0 .
+
+Board11:
+    GenerationType: Manual
+    Layout: |-
+        M M M M M M M
+        M . c1 k1 e1 . M
+        M . l1 . i1 . M
+        M . . . . . M
+        M . q0 . p0 . M
+        M . d0 k0 r0 . M
+        M M M M M M M
+
+Board1:
+    GenerationType: Manual
+    Layout: |-
+        M M M M M M M
+        M . . . . . M
+        M . c1 . . . M
+        M . . . . . M
+        M . c0 l0 i0 . M
+        M . . . e0 . M
+        M M M M M M M
+
+Boardtest:
+    GenerationType: Manual
+    Layout: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  k0  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  s0 .  . .  .  .   .  .  .  M
+        M  s0 .  . .  .  .   .  .  k1  M
+        M  g0 .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+
+Board:
+    GenerationType: Manual
+    Layout: |-
+        M  M  M  M  M  M  M  M  M  M  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  i0 .  .  .  d1 .  .  M
+        M  k0 c0 i0 .  .  .  d1 p1 k1 M
+        M  e0 c0 l0 .  .  .  q1 p1 r1 M
+        M  .  .  i0 .  .  .  d1 .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  .  .  .  .  .  .  .  .  .  M
+        M  M  M  M  M  M  M  M  M  M  M
+
+
+        
+
+ForwardModel:
+    LoseConditions: #If true: Player -> cant play
+        HasNoKing:
+        #- "HasNoEntities(Source)"
+        - "HasNoEntity(Source, King)"
+
+    Trigger:
+        - OnTick:
+            Type: Entity
+            Effects:
+                - "ChangeResource(Source.MovementPoints, Source.MovementSpeed)"
+                - "SetToMaximum(Source.Actions)"
+
+        - OnTick:
+            Type: Entity
+            Conditions:
+                - "HasBuff(Source, CurseBuff)"
+            Effects:
+                - "Attack(Source.Health, 1)"
+
+
+GameDescription:
+    Type: CombatGame
+    Actions:
+        Move: [Move]
+        Attack: [Attack, ArmouredAttack]
+    Entities:
+        Unit: [Infantry, Cannon, Engineer, Commander, Slasher, Thrower, Wizard, Warlord]
+        Melee: [Infantry, Engineer]
+        Ranged: [Cannon]
