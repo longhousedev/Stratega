@@ -3,6 +3,7 @@
 //
 
 #include <Stratega/Agent/Heuristic/WizardWarsHeuristic.h>
+#include <list>
 #include <map>
 #include <set>
 
