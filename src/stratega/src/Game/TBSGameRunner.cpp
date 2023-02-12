@@ -107,7 +107,7 @@ namespace SGA
 				std::cout << "Agent error: " << ex.what() << std::endl;
 				return;
 			}
-
+            observer.onActionChosen(*currentState, actionAssignment);
 			forwardModel->advanceGameState(*currentState, actionAssignment);
 			observer.onGameStateAdvanced(*currentState, *forwardModel);
 		}

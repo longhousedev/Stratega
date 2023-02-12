@@ -18,6 +18,7 @@ public:
 	virtual void runGame(const std::vector<int>& agentAssignment, boost::mt19937 rngEngine);
 	virtual void runGame(const std::vector<int>& agentAssignment, boost::mt19937 rngEngine, std::vector<std::shared_ptr<SGA::Agent>> agents);
 
+	virtual void onActionChosen(const SGA::GameState& state, const SGA::ActionAssignment& actions) override;
 	virtual void onGameStateAdvanced(const SGA::GameState& state, const SGA::ForwardModel& forwardModel) override;
 	virtual void onGameFinished(const SGA::GameState& finalState, const SGA::ForwardModel& forwardModel) override;
 	
@@ -30,5 +31,15 @@ private:
 	int gameCount;
 	int currentMapID;
 	int currentSeed;
+
+	// For making sure units are only logged once
     bool unitsLogged;
+
+	// Stores the actions chosen per player per tick
+    std::map< std::string, int > playerOneActions;
+    std::map< std::string, int > playerTwoActions;
+
+	// Making sure actions are logged when player submits end turn action
+    bool playerOneEndTurn;
+    bool playerTwoEndTurn;
 };

@@ -11,6 +11,9 @@ namespace SGA
 	public:
 		virtual ~GameObserver() = default;
 
+		// When an action has been chosen
+		virtual void onActionChosen(const GameState& state, const ActionAssignment& actions){};
+
 		/// <summary>
 		/// This method is called when a new game is started.
 		/// This method is never called a second time before onGameFinished is called. 

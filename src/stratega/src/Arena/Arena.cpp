@@ -6,8 +6,19 @@
 #include <Stratega/Arena/utils.h>
 #include <map>
 
+//unitsLogged = false;
+//playerOneEndTurn = false;
+//playerTwoEndTurn = false;
+
 Arena::Arena(const SGA::GameConfig& newConfig)
-	: config(&newConfig), runner(createGameRunner(newConfig)), gameBattleCount(0)
+    : config(&newConfig),
+      runner(createGameRunner(newConfig)),
+      gameBattleCount(0),
+      unitsLogged(false),
+      playerOneEndTurn(false),
+      playerTwoEndTurn(false),
+      playerOneActions(),
+      playerTwoActions()
 {
 }
 
@@ -135,7 +146,6 @@ void Arena::runGame(const std::vector<int>& agentAssignment, boost::mt19937 rngE
 	// Initialize new Game
 	std::cout << "Initializing new game" << std::endl;
 	runner->reset(currentMapID);
-    unitsLogged = false;
 
 	// Assign agents
 	boost::random::uniform_int_distribution<unsigned int> distribution(0, std::numeric_limits<unsigned int>::max());
@@ -182,12 +192,43 @@ void Arena::runGame(const std::vector<int>& agentAssignment, boost::mt19937 rngE
 	// This could result in weird yaml files, if logging is done outside of the game loggingScope
 	SGA::getDefaultLogger().flush();
 }
+void Arena::onActionChosen(const SGA::GameState& state, const SGA::ActionAssignment& actions)
+{
+   auto& entityActions = actions.getEntityActions();
+   auto& playerActions = actions.getPlayerActions();
 
+   for (auto& pair : entityActions) {
+      const auto& action = pair.second;
+      const auto& name = action.getActionName();
+
+	  if (state.getCurrentTBSPlayer() == 0) {
+         ++playerOneActions[name];
+	  } else if(state.getCurrentTBSPlayer() == 1) {
+         ++playerTwoActions[name];
+	  }
+   }
+   
+   // Check for end turn
+   if (playerActions.size() > 0) {
+	   for (auto& pair : playerActions) {
+         const auto& action = pair.second;
+         const auto& name = action.getActionName();
+         if(name == "End Turn / Pass Action" && state.getCurrentTBSPlayer() == 0) {
+            playerOneEndTurn = true;
+		 } 
+		 else if(name == "End Turn / Pass Action" && state.getCurrentTBSPlayer() == 1) {
+            playerTwoEndTurn = true;
+		 }
+	  }
+   }
+}
 
 void Arena::onGameStateAdvanced(const SGA::GameState& state, const SGA::ForwardModel& forwardModel)
 {
 	if (state.getGameType() == SGA::GameType::TBS)
 	{
+	  // Logs the army comps for the two players (excluding king), 
+	  // uses a bool which is reset on game start and end to make sure that only initial units are logged
       if(!unitsLogged) {
          auto& entities = state.getEntities();
          std::map< char, int > playerOneEntities;
@@ -210,15 +251,30 @@ void Arena::onGameStateAdvanced(const SGA::GameState& state, const SGA::ForwardM
 		// ToDo getActions should accept const gameStates
 		auto actions = forwardModel.generateActions(state, state.getCurrentTBSPlayer());
 		SGA::logValue("ActionCount", actions.size());
-  //      auto test = state.getEntities();
+
+		if (playerOneEndTurn) {
+           SGA::logValue("Player 1 Actions", playerOneActions);
+           playerOneEndTurn = false;
+           playerOneActions.clear();
+        }
+		else if(playerTwoEndTurn) {
+           SGA::logValue("Player 2 Actions", playerTwoActions);
+           playerTwoEndTurn = false;
+           playerTwoActions.clear();
+		}
+
+
+		// -- Old way of Logging units --
+
+        //auto test = state.getEntities();
 		//
 		////Get Entities
 
 		//auto entList = state.getEntities();
 
-  //      std::map< char, int > entMap;
-  //      for(int i = 0; i < test.size(); i++) {
-  //         ++entMap[entList[i].getEntityType().getSymbol()];
+        //std::map< char, int > entMap;
+        //for(int i = 0; i < test.size(); i++) {
+        //  ++entMap[entList[i].getEntityType().getSymbol()];
 		//}
 
 		//SGA::logValue("ActiveEntities", entMap);
