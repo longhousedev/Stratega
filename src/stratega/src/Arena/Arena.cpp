@@ -135,6 +135,7 @@ void Arena::runGame(const std::vector<int>& agentAssignment, boost::mt19937 rngE
 	// Initialize new Game
 	std::cout << "Initializing new game" << std::endl;
 	runner->reset(currentMapID);
+    unitsLogged = false;
 
 	// Assign agents
 	boost::random::uniform_int_distribution<unsigned int> distribution(0, std::numeric_limits<unsigned int>::max());
@@ -182,27 +183,45 @@ void Arena::runGame(const std::vector<int>& agentAssignment, boost::mt19937 rngE
 	SGA::getDefaultLogger().flush();
 }
 
+
 void Arena::onGameStateAdvanced(const SGA::GameState& state, const SGA::ForwardModel& forwardModel)
 {
 	if (state.getGameType() == SGA::GameType::TBS)
 	{
+      if(!unitsLogged) {
+         auto& entities = state.getEntities();
+         std::map< char, int > playerOneEntities;
+         std::map< char, int > playerTwoEntities;
+
+         for(auto& entity : entities) {
+            if(entity.getOwnerID() == 0 && entity.getEntityType().getSymbol() != 'k') {
+               ++playerOneEntities[entity.getEntityType().getSymbol()];
+            } else if(entity.getOwnerID() == 1 && entity.getEntityType().getSymbol() != 'k') {
+               ++playerTwoEntities[entity.getEntityType().getSymbol()];
+            }
+         }
+
+         SGA::logValue("Player 1 Comp", playerOneEntities);
+         SGA::logValue("Player 2 Comp", playerTwoEntities);
+         unitsLogged = true;
+      }
 		SGA::logValue("ActivePlayer", state.getCurrentTBSPlayer());
 
 		// ToDo getActions should accept const gameStates
 		auto actions = forwardModel.generateActions(state, state.getCurrentTBSPlayer());
 		SGA::logValue("ActionCount", actions.size());
-        auto test = state.getEntities();
-		
-		//Get Entities
+  //      auto test = state.getEntities();
+		//
+		////Get Entities
 
-		auto entList = state.getEntities();
+		//auto entList = state.getEntities();
 
-        std::map< char, int > entMap;
-        for(int i = 0; i < test.size(); i++) {
-           ++entMap[entList[i].getEntityType().getSymbol()];
-		}
+  //      std::map< char, int > entMap;
+  //      for(int i = 0; i < test.size(); i++) {
+  //         ++entMap[entList[i].getEntityType().getSymbol()];
+		//}
 
-		SGA::logValue("ActiveEntities", entMap);
+		//SGA::logValue("ActiveEntities", entMap);
 
 
 	}
@@ -224,6 +243,7 @@ void Arena::onGameFinished(const SGA::GameState& finalState, const SGA::ForwardM
 	{
 		SGA::logSingleValue("WinnerID", finalState.getWinnerID());
 		SGA::logSingleValue("Turns", finalState.getCurrentTick() + 1);
+        unitsLogged = false;
 	}
 	else if (finalState.getGameType() == SGA::GameType::RTS)
 	{

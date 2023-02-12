@@ -8,7 +8,7 @@ class Arena : public SGA::GameObserver
 {
 public:
 	Arena(const SGA::GameConfig& newConfig, std::unique_ptr<SGA::GameRunner> newRunner)
-		: config(&newConfig), runner(std::move(newRunner)), gameBattleCount(0)
+     : config(&newConfig), runner(std::move(newRunner)), gameBattleCount(0)
 	{
 	}
 	Arena(const SGA::GameConfig& config);
@@ -30,4 +30,5 @@ private:
 	int gameCount;
 	int currentMapID;
 	int currentSeed;
+    bool unitsLogged;
 };
