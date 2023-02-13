@@ -2,7 +2,7 @@ GameConfig:
     Type: TBS
     ActionTimer: 10s
     FogOfWar: false
-    RoundLimit: 15
+    RoundLimit: 20
 
 #GameRunner:
 #    AgentInitializationTime:
@@ -28,16 +28,16 @@ GameRunner:
         MaxNumberWarnings: 5000
 
 Agents:
-  - MCTSAgent:
-     FmCalls: 10000
-     Budget: TIME
-     RolloutLength: 20
-  - MCTSAgent:
-     FmCalls: 10000
-     Budget: TIME
-     RolloutLength: 20
-  #- OSLAAgent:
-  #- OSLAAgent:
+  #- MCTSAgent:
+  #   FmCalls: 10000
+  #   Budget: TIME
+  #   RolloutLength: 20
+  #- MCTSAgent:
+  #   FmCalls: 10000
+  #   Budget: TIME
+  #   RolloutLength: 20
+  - OSLAAgent:
+  - OSLAAgent:
   #- HumanAgent:
   #- OSLAAgent:
   #- OSLAAgent:
