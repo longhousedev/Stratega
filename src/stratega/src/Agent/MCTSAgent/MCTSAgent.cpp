@@ -3,7 +3,9 @@
 #include <Stratega/Agent/Heuristic/WizardWarsHeuristic.h>
 #include <Stratega/Agent/ActionScripts/AttackWeakestOpponentScript.h>
 #include <Stratega/Agent/ActionScripts/AttackKingScript.h>
+#include <Stratega/Agent/ActionScripts/RandomActionScript.h>
 #include <Stratega/Agent/Heuristic/AggresiveHeuristic.h>
+#include <Stratega/Agent/Heuristic/BasicHeuristic.h>
 
 
 namespace SGA
@@ -20,7 +22,7 @@ namespace SGA
         parameters_.heuristic = std::make_unique<WizardWarsHeuristic>(initialState);
         if (parameters_.budgetType == Budget::UNDEFINED)
             parameters_.budgetType = Budget::TIME;
-        parameters_.opponentModel = std::make_shared<AttackKingScript>();
+        parameters_.opponentModel = std::make_shared< AttackWeakestOpponentScript >();
     }
 
 

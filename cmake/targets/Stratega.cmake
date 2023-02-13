@@ -85,6 +85,7 @@ set(STRATEGA_SOURCE_FILES
         Agent/WizardWarsAgent/AggresiveAgent.cpp
         Agent/WizardWarsAgent/BalancedAgent.cpp
         Agent/WizardWarsAgent/DefensiveAgent.cpp
+        Agent/Heuristic/BasicHeuristic.cpp
 
 )
 if(NOT SGA_BUILD_HEADLESS)

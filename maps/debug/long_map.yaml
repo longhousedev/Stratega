@@ -1,0 +1,13 @@
+Maps:
+	
+   Map1: |-
+      M  M  M  M  M  M  M  M  M  M  M  M  M  M  M 
+      M  .  .  .  .  .  .  .  .  .  .  .  .  .  M
+      M  .  .  .  .  .  .  .  .  .  .  .  .  .  M
+      M  .  .  s0 .  .  .  .  .  .  .  s1 .  .  M
+      M  k0 t0 s0 .  .  .  .  .  .  .  s1 t1 k1 M
+      M  w0 t0 g0 .  .  .  .  .  .  .  g1 t1 w1 M
+      M  .  .  s0 .  .  .  .  .  .  .  s1 .  .  M
+      M  .  .  .  .  .  .  .  .  .  .  .  .  .  M
+      M  .  .  .  .  .  .  .  .  .  .  .  .  .  M
+      M  M  M  M  M  M  M  M  M  M  M  M  M  M  M

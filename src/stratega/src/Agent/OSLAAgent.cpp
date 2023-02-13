@@ -9,7 +9,7 @@ namespace SGA
 	ActionAssignment OSLAAgent::computeAction(GameState state, const ForwardModel& forwardModel, Timer /*timer*/)
 	{
 		std::vector<Action> actionSpace = forwardModel.generateActions(state, getPlayerID());
-		AggresiveHeuristic heuristic(state);
+		WizardWarsHeuristic heuristic(state);
 		double bestHeuristicValue = -std::numeric_limits<double>::max();
 
 		int bestActionIndex = 0;
