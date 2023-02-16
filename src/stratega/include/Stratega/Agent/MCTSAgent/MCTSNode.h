@@ -95,7 +95,7 @@ namespace SGA {
 	private:
 
 		// Creates a new node to be inserted in the tree.
-		MCTSNode(ForwardModel& forwardModel, GameState gameState, MCTSNode* parent, int childIndex, int ownerID);
+		MCTSNode(ForwardModel& forwardModel, GameState gameState, MCTSNode* parent, int childIndex, int ownerID, boost::mt19937 randomGenerator);
 
 	};
 }
