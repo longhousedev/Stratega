@@ -1,6 +1,8 @@
 #pragma once
 #include <Stratega/Representation/GameState.h>
 #include <Stratega/ForwardModel/ForwardModel.h>
+#include <algorithm>
+#include <boost/random/mersenne_twister.hpp>
 
 namespace SGA
 {
@@ -19,12 +21,19 @@ namespace SGA
 
 		ITreeNode(const ForwardModel& forwardModel, const GameState& newGameState, int newOwnerID) :
 			ITreeNode(forwardModel, std::move(newGameState), nullptr, 0, newOwnerID) {}
-		
+
 		ITreeNode(const ForwardModel& forwardModel, const GameState& newGameState, NodeType* parent, const int newChildIndex, int newOwnerID) :
 			gameState(std::move(newGameState)), parentNode(parent), childIndex(newChildIndex), ownerID(newOwnerID)
 		{
 			children = std::vector<std::unique_ptr<NodeType>>();
 			computeActionSpace(forwardModel);
+		}
+		
+		ITreeNode(const ForwardModel& forwardModel, const GameState& newGameState, NodeType* parent, const int newChildIndex, int newOwnerID, boost::mt19937& randomGenerator) :
+			gameState(std::move(newGameState)), parentNode(parent), childIndex(newChildIndex), ownerID(newOwnerID)
+		{
+			children = std::vector<std::unique_ptr<NodeType>>();
+			computeActionSpace(forwardModel, randomGenerator);
 		}
 		
 		virtual std::vector<Action> getActionSpace(const ForwardModel& /*forwardModel*/, int /*playerID*/) const { return actionSpace; }
@@ -60,23 +69,68 @@ namespace SGA
 		/// If ownerID can't play, actionSpace is genreated for the current player if only one can play.
 		/// </summary>
 		/// <param name="forwardModel"></param>
-		void computeActionSpace(const ForwardModel& forwardModel)
-		{
-			if (gameState.canPlay(ownerID))
-			{
-				actionSpace = forwardModel.generateActions(this->gameState, ownerID);
-				playerID = ownerID;
-			}
-			else
-			{
-				std::vector<int> pIDs = gameState.whoCanPlay();
-				if (pIDs.size() >= 1)
-				{
-					actionSpace = forwardModel.generateActions(this->gameState, pIDs[0]);
-					playerID = pIDs[0];
-				}
-			}
-		}
+		//void computeactionspace(const forwardmodel& forwardmodel)
+		//{
+		//	if (gamestate.canplay(ownerid))
+		//	{
+		//		actionspace = forwardmodel.generateactions(this->gamestate, ownerid);
+		//		playerid = ownerid;
+		//	}
+		//	else
+		//	{
+		//		std::vector<int> pids = gamestate.whocanplay();
+		//		if (pids.size() >= 1)
+		//		{
+		//			actionspace = forwardmodel.generateactions(this->gamestate, pids[0]);
+		//			playerid = pids[0];
+		//		}
+		//	}
+		//}
+
+		/// <summary>
+        /// If ownerID can play, actionSpace is generated for player ownerID only.
+        /// If ownerID can't play, actionSpace is genreated for the current player if only
+        /// one can play.
+        /// </summary>
+        /// <param name="forwardModel"></param>
+        void computeActionSpace(const ForwardModel& forwardModel)
+        {
+            if(gameState.canPlay(ownerID)) {
+                actionSpace = forwardModel.generateActions(this->gameState, ownerID);
+                //std::shuffle(actionSpace.begin(), actionSpace.end(), randomGenerator);
+                playerID = ownerID;
+            } else {
+                std::vector< int > pIDs = gameState.whoCanPlay();
+                if(pIDs.size() >= 1) {
+                    actionSpace = forwardModel.generateActions(this->gameState, pIDs[0]);
+                    //std::shuffle(actionSpace.begin(), actionSpace.end(), randomGenerator);
+                    playerID = pIDs[0];
+                }
+            }
+        }
+
+		/// <summary>
+        /// If ownerID can play, actionSpace is generated for player ownerID only.
+        /// If ownerID can't play, actionSpace is genreated for the current player if only
+        /// one can play.
+        /// </summary>
+        /// <param name="forwardModel"></param>
+        void computeActionSpace(const ForwardModel& forwardModel, boost::mt19937 randomGenerator)
+        {	
+					
+            if(gameState.canPlay(ownerID)) {
+                actionSpace = forwardModel.generateActions(this->gameState, ownerID);
+                std::shuffle(actionSpace.begin(), actionSpace.end(), randomGenerator);
+                playerID = ownerID;
+            } else {
+                std::vector< int > pIDs = gameState.whoCanPlay();
+                if(pIDs.size() >= 1) {
+                    actionSpace = forwardModel.generateActions(this->gameState, pIDs[0]);
+                    std::shuffle(actionSpace.begin(), actionSpace.end(), randomGenerator);
+                    playerID = pIDs[0];
+                }
+            }
+        }
 
 
 		void printTree(const std::string& prefix, const ITreeNode<NodeType>* node, bool isLast, const std::string& actionName) const
