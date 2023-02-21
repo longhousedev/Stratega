@@ -9,21 +9,31 @@ int main(int argc, char** argv)
 {
 	cparse_startup();
 
+        std::string mapName = "long_map.yaml";
+        std::string configName = "/TBS/hi.yaml";
+        std::string logName = "long_mirror_mcts.yaml";
+
 	InputParser parser(argc, argv);
 	auto seed = parser.getCmdOption<unsigned int>("-seed", 0);
-	auto numberOfGames = parser.getCmdOption<unsigned int>("-gamesNumber", 20);
+	auto numberOfGames = parser.getCmdOption<unsigned int>("-gamesNumber", 4);
 	auto playerCount = parser.getCmdOption<int>("-playerCount", 2);
-	auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/out/build/x64-Release/bin/long_map_MCTS.yaml");
+	//auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/out/build/x64-Release/bin/long_map_MCTS.yaml");
 	//Currently obsolete but configPath shouldn't have a default value. So we keep it until then
 	#ifdef _WIN32
 		auto configPath = parser.getCmdOption< std::string >("-configPath","C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
+                auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/out/build/x64-Release/bin/long_map_MCTS.yaml");
+                auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/maps/debug/long_map.yaml");
 	#elif __APPLE__
-		auto configPath = parser.getCmdOption< std::string >("-configPath", "/Users/george/Documents/GAIG/StrategaTest/resources/gameConfigurations/TBS/hi.yaml");
+		auto configPath = parser.getCmdOption< std::string >("-configPath", "/Users/george/Documents/GAIG/Stratega/resources/gameConfigurations/"+configName);
+                auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "/Users/george/Documents/GAIG/Stratega/maps/debug/"+mapName);
+                auto logPath = parser.getCmdOption<std::string>("-logPath", "/Users/george/Documents/GAIG/Stratega/results/debug/"+logName);
 	#elif __linux__
 		auto configPath = parser.getCmdOption< std::string >("-configPath", "../resources/gameConfigurations/TBS/hi.yaml");
+                auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/maps/debug/long_map.yaml");
+                auto logPath = parser.getCmdOption<std::string>("-logPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/out/build/x64-Release/bin/long_map_MCTS.yaml")
 	#endif
 	//Optional
-	auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/maps/debug/long_map.yaml");
+	//auto mapsPath = parser.getCmdOption<std::string>("-mapsPath", "C:/Users/Georg/Documents/Personal Projects/Stratega2022/maps/debug/long_map.yaml");
 
 	if (configPath.empty())
 	{

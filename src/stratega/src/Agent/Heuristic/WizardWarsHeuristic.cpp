@@ -62,10 +62,7 @@ double WizardWarsHeuristic::evaluateGameState(
             kingY = static_cast< int >(entity.y());
             opponentKingHP = entity.getParameter("Health");
          }
-         // Support Units
-         else if(entityType.getName() == "Druid" || entityType.getName() == "Engineer") {
-            supportPositions.push_front(entity.getPosition());
-         } else {
+         else {
             opponentArmyHealth += entity.getParameter("Health");
          }
 
@@ -74,7 +71,14 @@ double WizardWarsHeuristic::evaluateGameState(
          auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
          if(entityType.getName() == "King") {
             playerKingHP = entity.getParameter("Health");
-         } else {
+         }
+         // Support Units
+         else if(entityType.getName() == "Druid" || entityType.getName() == "Engineer") {
+            supportPositions.push_front(entity.getPosition());
+            playerArmyHealth += entity.getParameter("Health");
+
+         }
+         else {
             playerArmyHealth += entity.getParameter("Health");
          }
       }
@@ -90,9 +94,10 @@ double WizardWarsHeuristic::evaluateGameState(
          // Check how many units are in range of a support
          for(Vector2f supportPosition : supportPositions) {
             double distance = supportPosition.manhattanDistance(positions[entity]);
-            if(distance <= 3)
+            if(distance <= 3) {
                supportUnitsinRange += 1;
-            break;
+               break;
+            }
          }
       }
 
@@ -108,22 +113,87 @@ double WizardWarsHeuristic::evaluateGameState(
    meanDistance = totalDistance / static_cast< double >(playerEntities.size());
 
    // Negative modifiers
-   score -= meanDistance * meanDistanceMOD;
-   score -= opponentKingHP * opponentKingHPMOD;
-   score -= opponentArmyHealth * opponentArmyHealthMOD;
-   score -= opponentEntities.size() * opponentArmySizeMOD;
+   score -= (meanDistance * meanDistanceMOD) / meanDistanceUB;
+   score -= (opponentKingHP * opponentKingHPMOD) / opponentKingHPUB;
+   score -= (opponentArmyHealth * opponentArmyHealthMOD) / opponentArmyHealthUB;
+   score -= (opponentEntities.size() * opponentArmySizeMOD) / opponentArmySizeUB;
 
    // Positive modifiers
-   score += playerArmyHealth * playerArmyHealthMOD;
-   score += playerKingHP * playerKingHPMOD;
-   score += playerEntities.size() * playerArmySizeMOD;
-   score += supportUnitsinRange * supportUnitsinRangeMOD;
+   score += (playerArmyHealth * playerArmyHealthMOD) / playerArmyHealthUB;
+   score += (playerKingHP * playerKingHPMOD) / playerKingHPUB;
+   score += (playerEntities.size() * playerArmySizeMOD) / playerArmySizeUB;
+   score += (supportUnitsinRange * supportUnitsinRangeMOD) / supportUnitsinRangeUB;
 
    return score;
 }
-WizardWarsHeuristic::WizardWarsHeuristic(GameState state)
+WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
+      opponentArmySizeUB(0), playerArmySizeUB(0), playerArmyHealthUB(0), opponentArmyHealthUB(0),
+      playerKingHPUB(0), opponentKingHPUB(0), meanDistanceUB(16), supportUnitsinRangeUB(0)
 {
 
+   //MEAN DISTANCE UB IN LIST INIT
+
+   // Variables
+   std::set< int > opponentEntities = std::set< int >();
+   std::set< int > playerEntities = std::set< int >();
+   std::map< int, Vector2f > positions;
+   std::list< Vector2f > supportPositions;
+   double totalDistance = 0;
+   int kingX = 0;
+   int kingY = 0;
+   double playerArmyHealth = 0;
+   double opponentArmyHealth = 0;
+   double playerKingHP = 0;
+   double opponentKingHP = 0;
+   double meanDistance = 0;
+   double supportUnitsinRange = 0;
+
+   // Register Entities
+   for(const auto& entity : gameState.getEntities()) {
+      positions.emplace(entity.getID(), entity.getPosition());
+
+      if(entity.getOwnerID() != playerID) {
+         opponentEntities.insert(entity.getID());
+         auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
+
+         // Get Enemy King pos and health
+         if(entityType.getName() == "King") {
+            kingX = static_cast< int >(entity.x());
+            kingY = static_cast< int >(entity.y());
+            opponentKingHPUB = entity.getParameter("Health");
+         }
+         else {
+            opponentArmyHealthUB += entity.getParameter("Health");
+         }
+
+      } else if(entity.getOwnerID() == playerID) {
+         playerEntities.insert(entity.getID());
+         auto& entityType = gameState.getGameInfo()->getEntityType(entity.getEntityTypeID());
+         if(entityType.getName() == "King") {
+            playerKingHPUB = entity.getParameter("Health");
+         }
+         // Support Units
+         else if(entityType.getName() == "Druid" || entityType.getName() == "Engineer") {
+            supportPositions.push_front(entity.getPosition());
+            playerArmyHealthUB += entity.getParameter("Health");
+         }
+         else
+         {
+            playerArmyHealthUB += entity.getParameter("Health");
+         }
+      }
+
+      //Army size and support units in range
+
+      //TODO Include king in army or not?
+      playerArmySizeUB = playerEntities.size();
+      opponentArmySizeUB = opponentEntities.size();
+      supportUnitsinRangeUB = playerEntities.size() - supportPositions.size();
+   }
+
+
 }
+
+
 WizardWarsHeuristic::WizardWarsHeuristic() {}
 }  // namespace SGA
