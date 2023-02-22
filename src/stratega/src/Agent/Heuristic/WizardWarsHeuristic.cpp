@@ -43,9 +43,9 @@ double WizardWarsHeuristic::evaluateGameState(
    // Win check
    if(gameState.isGameOver()) {
       if(gameState.getWinnerID() == playerID)
-         return 10000000000000;
+         return 1000;
       else
-         return -10000000000000;
+         return -1000;
    }
 
    // Register Entities
@@ -110,13 +110,14 @@ double WizardWarsHeuristic::evaluateGameState(
       }
    }
 
+   
    meanDistance = totalDistance / static_cast< double >(playerEntities.size());
 
    // Negative modifiers
-   score -= (meanDistance * meanDistanceMOD) / meanDistanceUB;
-   score -= (opponentKingHP * opponentKingHPMOD) / opponentKingHPUB;
-   score -= (opponentArmyHealth * opponentArmyHealthMOD) / opponentArmyHealthUB;
-   score -= (opponentEntities.size() * opponentArmySizeMOD) / opponentArmySizeUB;
+   score += (meanDistanceUB - (meanDistance * meanDistanceMOD)) / meanDistanceUB;
+   score += (opponentKingHPUB - (opponentKingHP * opponentKingHPMOD)) / opponentKingHPUB;
+   score += (opponentArmyHealthUB - (opponentArmyHealth * opponentArmyHealthMOD)) / opponentArmyHealthUB;
+   score += (opponentArmySizeUB - (opponentEntities.size() * opponentArmySizeMOD)) / opponentArmySizeUB;
 
    // Positive modifiers
    score += (playerArmyHealth * playerArmyHealthMOD) / playerArmyHealthUB;
@@ -124,11 +125,12 @@ double WizardWarsHeuristic::evaluateGameState(
    score += (playerEntities.size() * playerArmySizeMOD) / playerArmySizeUB;
    score += (supportUnitsinRange * supportUnitsinRangeMOD) / supportUnitsinRangeUB;
 
+   score /= 8;
    return score;
 }
 WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
       opponentArmySizeUB(0), playerArmySizeUB(0), playerArmyHealthUB(0), opponentArmyHealthUB(0),
-      playerKingHPUB(0), opponentKingHPUB(0), meanDistanceUB(16), supportUnitsinRangeUB(0)
+      playerKingHPUB(0), opponentKingHPUB(0), meanDistanceUB(20), supportUnitsinRangeUB(0)
 {
 
    //MEAN DISTANCE UB IN LIST INIT
@@ -147,6 +149,8 @@ WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
    double opponentKingHP = 0;
    double meanDistance = 0;
    double supportUnitsinRange = 0;
+
+   int test23 = gameState.getEntities().size();
 
    // Register Entities
    for(const auto& entity : gameState.getEntities()) {
@@ -182,14 +186,14 @@ WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
             playerArmyHealthUB += entity.getParameter("Health");
          }
       }
-
-      //Army size and support units in range
-
-      //TODO Include king in army or not?
-      playerArmySizeUB = playerEntities.size();
-      opponentArmySizeUB = opponentEntities.size();
-      supportUnitsinRangeUB = playerEntities.size() - supportPositions.size();
    }
+
+   //Army size and support units in range
+
+   //TODO Include king in army or not?
+   playerArmySizeUB = playerEntities.size();
+   opponentArmySizeUB = opponentEntities.size();
+   supportUnitsinRangeUB = playerEntities.size() - supportPositions.size();
 
 
 }
