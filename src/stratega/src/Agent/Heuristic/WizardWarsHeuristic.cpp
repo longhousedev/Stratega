@@ -120,7 +120,7 @@ double WizardWarsHeuristic::evaluateGameState(
 }
 WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
       opponentArmySizeUB(0), playerArmySizeUB(0), playerArmyHealthUB(0), opponentArmyHealthUB(0),
-      playerKingHPUB(0), opponentKingHPUB(0), meanDistanceUB(20), supportUnitsinRangeUB(0)
+      playerKingHPUB(0), opponentKingHPUB(0), meanDistanceUB(16), supportUnitsinRangeUB(0)
 {
 
    //MEAN DISTANCE UB IN LIST INIT

@@ -14,7 +14,7 @@ void DefensiveAgent::init(
        if (parameters_.heuristic == nullptr)
            parameters_.heuristic = std::make_unique<AbstractHeuristic>(initialState);
    */
-   parameters_.heuristic = std::make_unique< DefensiveHeuristic >(initialState);
+   parameters_.heuristic = std::make_unique< DefensiveHeuristic >(initialState, getPlayerID());
    if(parameters_.budgetType == Budget::UNDEFINED)
       parameters_.budgetType = Budget::TIME;
    parameters_.opponentModel = std::make_shared< AttackWeakestOpponentScript >();

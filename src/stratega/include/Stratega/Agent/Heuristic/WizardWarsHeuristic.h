@@ -16,14 +16,14 @@ namespace SGA {
      protected:
 
       //Weights (Static)
-      double opponentArmySizeMOD = 1;
-      double playerArmySizeMOD = 1;
-      double playerArmyHealthMOD = 1;
-      double opponentArmyHealthMOD = 1;
-      double playerKingHPMOD = 1;
-      double opponentKingHPMOD = 1;
-      double meanDistanceMOD = 1;
-      double supportUnitsinRangeMOD = 1;
+      double opponentArmySizeMOD = 0.5;
+      double playerArmySizeMOD = 0.5;
+      double playerArmyHealthMOD = 0.5;
+      double opponentArmyHealthMOD = 0.5;
+      double playerKingHPMOD = 0.5;
+      double opponentKingHPMOD = 0.5;
+      double meanDistanceMOD = 0.5;
+      double supportUnitsinRangeMOD = 0.5;
 
       // Upper Bounds
       double opponentArmySizeUB;
