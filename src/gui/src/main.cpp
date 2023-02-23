@@ -11,7 +11,9 @@ int main()
 	#ifdef _WIN32
 		std::string configPath("C:/Users/Georg/Documents/Personal Projects/Stratega2022/resources/gameConfigurations/TBS/hi.yaml");
 	#elif __APPLE__
-        std::string configPath("/Users/george/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/hi.yaml");
+         std::string configPath("/Users/george/Documents/GAIG/Stratega/resources/gameConfigurations/TBS/hi.yaml");
+        #elif __linux__
+         std::string configPath("/home/george/Repos/Stratega/resources/gameConfigurations/TBS/hi.yaml");
 	#endif
         auto gameConfig = SGA::loadConfigFromYAML(configPath);
 
