@@ -30,16 +30,6 @@ double WizardWarsHeuristic::evaluateGameState(
    double meanDistance = 0;
    double supportUnitsinRange = 0;
 
-   // Weights
-   double opponentArmySizeMOD = 1;
-   double playerArmySizeMOD = 1;
-   double playerArmyHealthMOD = 0.1;
-   double opponentArmyHealthMOD = 0.1;
-   double playerKingHPMOD = 1;
-   double opponentKingHPMOD = 1;
-   double meanDistanceMOD = 1;
-   double supportUnitsinRangeMOD = 1;
-
    // Win check
    if(gameState.isGameOver()) {
       if(gameState.getWinnerID() == playerID)
@@ -114,16 +104,16 @@ double WizardWarsHeuristic::evaluateGameState(
    meanDistance = totalDistance / static_cast< double >(playerEntities.size());
 
    // Negative modifiers
-   score += (meanDistanceUB - (meanDistance * meanDistanceMOD)) / meanDistanceUB;
-   score += (opponentKingHPUB - (opponentKingHP * opponentKingHPMOD)) / opponentKingHPUB;
-   score += (opponentArmyHealthUB - (opponentArmyHealth * opponentArmyHealthMOD)) / opponentArmyHealthUB;
-   score += (opponentArmySizeUB - (opponentEntities.size() * opponentArmySizeMOD)) / opponentArmySizeUB;
+   score += ((meanDistanceUB - meanDistance) / meanDistanceUB) * meanDistanceMOD;
+   score += ((opponentKingHPUB - opponentKingHP) / opponentKingHPUB) * opponentKingHPMOD;
+   score += ((opponentArmyHealthUB - opponentArmyHealth) / opponentArmyHealthUB) * opponentArmyHealthMOD;
+   score += ((opponentArmySizeUB - static_cast<double>(opponentEntities.size())) / opponentArmySizeUB) * opponentArmySizeMOD;
 
    // Positive modifiers
-   score += (playerArmyHealth * playerArmyHealthMOD) / playerArmyHealthUB;
-   score += (playerKingHP * playerKingHPMOD) / playerKingHPUB;
-   score += (playerEntities.size() * playerArmySizeMOD) / playerArmySizeUB;
-   score += (supportUnitsinRange * supportUnitsinRangeMOD) / supportUnitsinRangeUB;
+   score += (playerArmyHealth / playerArmyHealthUB) * playerArmyHealthMOD;
+   score += (playerKingHP  / playerKingHPUB) * playerKingHPMOD;
+   score += (static_cast<double>(playerEntities.size()) / playerArmySizeUB) * playerArmySizeMOD;
+   score += (supportUnitsinRange / supportUnitsinRangeUB) * supportUnitsinRangeMOD;
 
    score /= 8;
    return score;
@@ -140,17 +130,6 @@ WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
    std::set< int > playerEntities = std::set< int >();
    std::map< int, Vector2f > positions;
    std::list< Vector2f > supportPositions;
-   double totalDistance = 0;
-   int kingX = 0;
-   int kingY = 0;
-   double playerArmyHealth = 0;
-   double opponentArmyHealth = 0;
-   double playerKingHP = 0;
-   double opponentKingHP = 0;
-   double meanDistance = 0;
-   double supportUnitsinRange = 0;
-
-   int test23 = gameState.getEntities().size();
 
    // Register Entities
    for(const auto& entity : gameState.getEntities()) {
@@ -162,8 +141,6 @@ WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
 
          // Get Enemy King pos and health
          if(entityType.getName() == "King") {
-            kingX = static_cast< int >(entity.x());
-            kingY = static_cast< int >(entity.y());
             opponentKingHPUB = entity.getParameter("Health");
          }
          else {
@@ -191,9 +168,9 @@ WizardWarsHeuristic::WizardWarsHeuristic(GameState gameState, int playerID) :
    //Army size and support units in range
 
    //TODO Include king in army or not?
-   playerArmySizeUB = playerEntities.size();
-   opponentArmySizeUB = opponentEntities.size();
-   supportUnitsinRangeUB = playerEntities.size() - supportPositions.size();
+   playerArmySizeUB = static_cast< double >(playerEntities.size());
+   opponentArmySizeUB = static_cast< double >(opponentEntities.size());
+   supportUnitsinRangeUB = static_cast< double >(playerEntities.size() - supportPositions.size());
 
 
 }

@@ -14,6 +14,18 @@ namespace SGA {
       std::string getName() const override { return "WizardWarsHeuristic"; }
 
      protected:
+
+      //Weights (Static)
+      double opponentArmySizeMOD = 1;
+      double playerArmySizeMOD = 1;
+      double playerArmyHealthMOD = 1;
+      double opponentArmyHealthMOD = 1;
+      double playerKingHPMOD = 1;
+      double opponentKingHPMOD = 1;
+      double meanDistanceMOD = 1;
+      double supportUnitsinRangeMOD = 1;
+
+      // Upper Bounds
       double opponentArmySizeUB;
       double playerArmySizeUB;
       double playerArmyHealthUB;
